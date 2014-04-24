@@ -64,6 +64,11 @@
             android:label="@string/add_clinic_activity" >
             
         </activity>
+        <activity 
+            android:name="com.tabibyab.DoctorInfActivity"
+            android:label="@string/doctor_info" >
+            
+        </activity>
         
         
     </application>

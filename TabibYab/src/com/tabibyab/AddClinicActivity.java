@@ -108,7 +108,6 @@ public class AddClinicActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.select_ok:
 			(new AddClinic()).execute();
-			finish();
 			return true;
 			
 			
@@ -165,6 +164,8 @@ public class AddClinicActivity extends Activity {
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
+            finish();
+            
             
             
             

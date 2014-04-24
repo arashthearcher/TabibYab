@@ -117,16 +117,18 @@ public class ServiceHandler {
             } else if (method == GET) {
                 // appending params to url
                 if (params != null) {
-                    String paramString = URLEncodedUtils.format(params, "utf-8");
-                    url += "?" + paramString;
+                	String paramString = URLEncodedUtils.format(params, "utf-8");
+                	if(params.size()==1)    //TODO get request in server is not standard!!!
+                		url+=paramString.substring(paramString.indexOf("=")+1);
+                	else
+                		url += "?" + paramString;
                 }
                 HttpGet httpGet = new HttpGet(url);
- 
                 httpResponse = httpClient.execute(httpGet);
- 
             }
             httpEntity = httpResponse.getEntity();
             response = EntityUtils.toString(httpEntity);
+            Log.d("buuuug", response);
  
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -138,5 +140,31 @@ public class ServiceHandler {
          
         return response;
  
+    }
+    
+    public HashMap<String, String> parseDoctorInfo(String jsonStr)
+    {
+    	HashMap<String, String> doctor = new HashMap<String, String>();
+        if (jsonStr != null) {
+            try {
+                	JSONObject c = new JSONObject(jsonStr);
+                    String id = c.getString(TAGS.TAG_ID);
+                    String name = c.getString(TAGS.TAG_NAME);
+                    String coordinates = c.getString(TAGS.TAG_COORDINATES);
+                    String type = c.getString(TAGS.TAG_TYPE);
+                    String appointmentOnly = c.getString(TAGS.TAG_APPOINMENT);
+                    
+                    doctor.put(TAGS.TAG_ID, id);
+                    doctor.put(TAGS.TAG_NAME, name);
+                    doctor.put(TAGS.TAG_TYPE, type);
+                    doctor.put(TAGS.TAG_APPOINMENT, appointmentOnly);
+                    doctor.put(TAGS.TAG_COORDINATES, coordinates);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("ServiceHandler", "Couldn't get any data from the url");
+        }
+        return doctor;
     }
 }

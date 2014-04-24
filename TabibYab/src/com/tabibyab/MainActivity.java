@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -14,13 +13,13 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-
 
 import android.graphics.Color;
 import android.location.Location;
@@ -32,23 +31,20 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupWindow;
 
-public class MainActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks,
-GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
-	
-	
-	private GoogleMap gMap ;
+public class MainActivity extends Activity implements
+		GooglePlayServicesClient.ConnectionCallbacks,
+		GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
+
+	private GoogleMap gMap;
 	private ProgressDialog pDialog;
-	
-    
-    
- 
-    // Hashmap for ListView
-    ArrayList<HashMap<String, String>> clinicList;
-    
-    
-    
-    private static final long ONE_MIN = 1000 * 60;
+
+	// Hashmap for ListView
+	ArrayList<HashMap<String, String>> clinicList;
+
+	private static final long ONE_MIN = 1000 * 60;
 	private static final long TWO_MIN = ONE_MIN * 2;
 	private static final long FIVE_MIN = ONE_MIN * 5;
 	private static final long MEASURE_TIME = 1000 * 30;
@@ -56,7 +52,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 	private static final long FASTES_UPDATE_FREQ = 1000 * 2;
 	private static final float MIN_ACCURACY = 500.0f;
 	private static final float MIN_LAST_READ_ACCURACY = 1000.0f;
-	
+
 	// Define an object that holds accuracy and frequency parameters
 	LocationRequest mLocationRequest;
 	private final String TAG = "LocationGetLocationActivity";
@@ -64,41 +60,38 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 	private boolean mFirstUpdate = true;
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
-	
-	private Circle circle = null ;
+
+	private Circle circle = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
+		gMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+				.getMap();
 		gMap.setMyLocationEnabled(true);
 		gMap.getUiSettings().setCompassEnabled(true);
 		gMap.getUiSettings().setMyLocationButtonEnabled(true);
 		gMap.getUiSettings().setRotateGesturesEnabled(true);
-		
+
 		clinicList = new ArrayList<HashMap<String, String>>();
-		
-   
-        
-        
-			// Create new Location Client. This class will handle callbacks
-     		mLocationClient = new LocationClient(this, this, this);
 
-     		// Create and define the LocationRequest
-     		mLocationRequest = LocationRequest.create();
+		// Create new Location Client. This class will handle callbacks
+		mLocationClient = new LocationClient(this, this, this);
 
-     		// Use high accuracy
-     		mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+		// Create and define the LocationRequest
+		mLocationRequest = LocationRequest.create();
 
-     		// Update every 10 seconds
-     		mLocationRequest.setInterval(POLLING_FREQ);
+		// Use high accuracy
+		mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
 
-     		// Recieve updates no more often than every 2 seconds
-     		mLocationRequest.setFastestInterval(FASTES_UPDATE_FREQ);        
-		
-		
+		// Update every 10 seconds
+		mLocationRequest.setInterval(POLLING_FREQ);
+
+		// Recieve updates no more often than every 2 seconds
+		mLocationRequest.setFastestInterval(FASTES_UPDATE_FREQ);
+
 	}
 
 	@Override
@@ -107,21 +100,21 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.addClinicButton:
-			Intent addClinicIntent = new Intent(MainActivity.this, AddClinicActivity.class);
+			Intent addClinicIntent = new Intent(MainActivity.this,
+					AddClinicActivity.class);
 			startActivity(addClinicIntent);
-			
+
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -142,12 +135,10 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 		super.onStop();
 	}
 
-
 	// Called back when location changes
 
 	@Override
 	public void onLocationChanged(Location location) {
-
 
 		// Determine whether new location is better than current best
 		// estimate
@@ -194,7 +185,7 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 							- TWO_MIN) {
 
 				mLocationClient.requestLocationUpdates(mLocationRequest, this);
-				
+
 				// Schedule a runnable to unregister location listeners
 				Executors.newScheduledThreadPool(1).schedule(new Runnable() {
 
@@ -207,8 +198,8 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 				}, MEASURE_TIME, TimeUnit.MILLISECONDS);
 			}
 
-			}
 		}
+	}
 
 	// Get the last known location from all providers
 	// return best reading is as accurate as minAccuracy and
@@ -245,7 +236,6 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 		}
 	}
 
-
 	@Override
 	public void onDisconnected() {
 
@@ -269,94 +259,101 @@ GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 		return (ConnectionResult.SUCCESS == resultCode);
 
 	}
-	
-	private void updateLocation(Location location) 
-	{
+
+	private void updateLocation(Location location) {
 
 		// Calling async task to get json
-        new GetClinics().execute();
-       
-        if (circle != null)
-        {
-        	circle.setVisible(false);
-        	circle.remove();
-        	
-        }
-        circle = gMap.addCircle(new CircleOptions()
-        .center(new LatLng(mBestReading.getLatitude(),mBestReading.getLongitude()))
-        .radius(10000)
-        .strokeWidth(3)
-        .strokeColor(Color.BLUE));
+		new GetClinics().execute();
 
+		if (circle != null) {
+			circle.setVisible(false);
+			circle.remove();
+
+		}
+		circle = gMap.addCircle(new CircleOptions()
+				.center(new LatLng(mBestReading.getLatitude(), mBestReading
+						.getLongitude())).radius(10000).strokeWidth(3)
+				.strokeColor(Color.BLUE));
 
 	}
-	
-	public void showClinicsOnMap(ArrayList<HashMap<String, String>> clinicList)
-	{
-        if (gMap != null) {
-        	
-        	Coordinate c = null ;
-        	for (int i = 0; i < clinicList.size(); i++) {
-        		
+
+	public void showClinicsOnMap(
+			final ArrayList<HashMap<String, String>> clinicList) {
+		if (gMap != null) {
+
+			Coordinate c = null;
+			for (int i = 0; i < clinicList.size(); i++) {
+
 				c = new Coordinate(clinicList.get(i).get(TAGS.TAG_COORDINATES));
 				gMap.addMarker(new MarkerOptions().position(
-    					new LatLng(c.lat, c.lng)).title(clinicList.get(i).get(TAGS.TAG_NAME)));
+						new LatLng(c.lat, c.lng)).title(
+						clinicList.get(i).get(TAGS.TAG_NAME)));
+				gMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+
+					@Override
+					public void onInfoWindowClick(Marker marker) {
+						try {
+							Log.d("Test", marker.getId());
+							Intent DoctorInfintent = new Intent(
+									MainActivity.this, DoctorInfActivity.class);
+							DoctorInfintent.putExtra("doctor_id", 1);
+							startActivity(DoctorInfintent);
+						} catch (ArrayIndexOutOfBoundsException e) {
+							Log.e("ArrayIndexOutOfBoundsException", " Occured");
+						}
+
+					}
+				});
 				if (c != null)
-					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(c.lat,c.lng), 11));
+					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+							new LatLng(c.lat, c.lng), 11));
 			}
-        	
+
 		}
 	}
-	
-	
-	
-	private class GetClinics extends AsyncTask<Void, Void, Void> {
-		 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
- 
-        }
- 
-        @Override
-        protected Void doInBackground(Void... arg0) {
-        	
-        	
-            // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
- 
-            // Making a request to url and getting response
-            String jsonStr = sh.makeServiceCall(getResources().getString(R.string.url_list_doctor), ServiceHandler.GET);
- 
-            Log.d("Response: ", "> " + jsonStr);
-            
-            clinicList = sh.parseClinicList(jsonStr);
- 
-            return null;
-        }
- 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-            
-            MainActivity.this.showClinicsOnMap(clinicList);
-            
 
-            
-            
-        }
- 
-    }
-	
-	
-	
+	private class GetClinics extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// Showing progress dialog
+			pDialog = new ProgressDialog(MainActivity.this);
+			pDialog.setMessage("Please wait...");
+			pDialog.setCancelable(false);
+			pDialog.show();
+
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+
+			// Creating service handler class instance
+			ServiceHandler sh = new ServiceHandler();
+
+			// Making a request to url and getting response
+			String jsonStr = sh.makeServiceCall(
+					getResources().getString(R.string.url_list_doctor),
+					ServiceHandler.GET);
+
+			Log.d("Response: ", "> " + jsonStr);
+
+			clinicList = sh.parseClinicList(jsonStr);
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			// Dismiss the progress dialog
+			if (pDialog.isShowing())
+				pDialog.dismiss();
+
+			MainActivity.this.showClinicsOnMap(clinicList);
+
+		}
+
+	}
 
 }
