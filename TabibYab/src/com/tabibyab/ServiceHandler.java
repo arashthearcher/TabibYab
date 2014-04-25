@@ -80,6 +80,39 @@ public class ServiceHandler {
         }
         return clinicList;
     }
+    
+    public ArrayList<String> parseCommentsList(String jsonStr)
+    {
+//    	ArrayList<HashMap<String, String>> commentsList = new ArrayList<HashMap<String, String>>();
+    	ArrayList<String> commentsList = new ArrayList<String>();
+        if (jsonStr != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonStr);
+                 JSONArray comments = jsonObj.getJSONArray(TAGS.TAG_RESULTS);
+
+                for (int i = 0; i < comments.length(); i++) {
+                    JSONObject c = comments.getJSONObject(i);
+                    String id = c.getString(TAGS.TAG_ID);
+                    String name = c.getString(TAGS.TAG_NAME);
+                    String clinic = c.getString(TAGS.TAG_CLINIC);
+                    String commentText = c.getString(TAGS.TAG_COMMENT);
+                    
+//                    HashMap<String, String> commentMap = new HashMap<String, String>();
+//                    commentMap.put(TAGS.TAG_ID, id);
+//                    commentMap.put(TAGS.TAG_NAME, name);
+//                    commentMap.put(TAGS.TAG_CLINIC,clinic);
+//                    commentMap.put(TAGS.TAG_COMMENT, comment);
+                    String comment = name+": "+commentText;
+                    commentsList.add(comment);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("ServiceHandler", "Couldn't get any data from the url");
+        }
+        return commentsList;
+    }
  
     /**
      * Making service call

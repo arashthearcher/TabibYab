@@ -67,6 +67,11 @@
         <activity 
             android:name="com.tabibyab.DoctorInfActivity"
             android:label="@string/doctor_info" >
+        </activity>
+        
+        <activity 
+            android:label="@string/Comments_View" 
+            android:name="DoctorCommentsActivity">
             
         </activity>
         
