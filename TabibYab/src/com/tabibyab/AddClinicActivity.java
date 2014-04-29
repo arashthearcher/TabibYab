@@ -61,7 +61,7 @@ public class AddClinicActivity extends Activity {
 //		};
 //		spinner.setOnItemSelectedListener(oisl);
 		
-		Button button = (Button) findViewById(R.id.select_point_button);
+		Button button = (Button) findViewById(R.id.add_point_on_map);
 		
 		button.setOnClickListener(new OnClickListener() {
 			@Override

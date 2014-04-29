@@ -28,5 +28,9 @@
      <string name="Comments_View">مشاهده نظرات</string>
     
      <string name="add_comment">افزودن نظر</string>
+    
+     <string name="commenter_name">نام نظر دهنده</string>
+    
+     <string name="comment_text">متن نظر</string>
 
 </resources>

@@ -74,6 +74,7 @@
             android:name="DoctorCommentsActivity">
             
         </activity>
+        <activity android:name="AddCommentActivity"></activity>
         
         
     </application>

@@ -66,7 +66,6 @@ public class DoctorCommentsActivity extends Activity implements
 			String jsonStr = sh.makeServiceCall(URLs.url_doctor_comments,
 					ServiceHandler.GET, nameValuePairs);
 			commentsList = sh.parseCommentsList(jsonStr);
-			Log.d("Response: ", "> " + commentsList.get(0));
 			return null;
 		}
 
@@ -87,6 +86,16 @@ public class DoctorCommentsActivity extends Activity implements
 		listComments.setAdapter(new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, commentsList));
 		listComments.setOnItemClickListener(this);
+		
+		Button add_comment_button = (Button) findViewById(R.id.add_comment);
+		add_comment_button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent add_comment_view = new Intent(DoctorCommentsActivity.this, AddCommentActivity.class);
+				add_comment_view.putExtra("doctor_id", doctor_id);
+				startActivity(add_comment_view);
+				}
+		});
 	}
 
 }
