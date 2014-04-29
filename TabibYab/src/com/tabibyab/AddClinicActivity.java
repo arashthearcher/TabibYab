@@ -150,7 +150,7 @@ public class AddClinicActivity extends Activity {
             params.add(new DetailNameValuePair(TAGS.TAG_NAME, nameTextView.getText().toString()));
             params.add(new DetailNameValuePair(TAGS.TAG_COORDINATES, selectedLocation.toString()));
             
-            sh.makeServiceCall(getResources().getString(R.string.url_list_doctor), ServiceHandler.POST,(List) params);
+            sh.makeServiceCall(URLs.url_list_doctor, ServiceHandler.POST,(List) params);
             
             
 			return null;

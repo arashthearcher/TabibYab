@@ -63,15 +63,13 @@ public class DoctorCommentsActivity extends Activity implements
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("id", Integer
 					.toString(doctor_id)));
-			String jsonStr = sh.makeServiceCall(
-					getResources().getString(R.string.url_doctor_comments),
+			String jsonStr = sh.makeServiceCall(URLs.url_doctor_comments,
 					ServiceHandler.GET, nameValuePairs);
 			commentsList = sh.parseCommentsList(jsonStr);
 			Log.d("Response: ", "> " + commentsList.get(0));
 			return null;
 		}
 
-		
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);

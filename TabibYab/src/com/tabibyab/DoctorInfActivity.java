@@ -55,7 +55,7 @@ public class DoctorInfActivity extends Activity {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			 nameValuePairs.add(new BasicNameValuePair("id", Integer.toString(doctor_id)));
 			String jsonStr = sh.makeServiceCall(
-					getResources().getString(R.string.url_doctor_info),
+					URLs.url_doctor_info,
 					ServiceHandler.GET,nameValuePairs);
 			doctor = sh.parseDoctorInfo(jsonStr);
 			return null;

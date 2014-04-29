@@ -333,7 +333,7 @@ public class MainActivity extends Activity implements
 
 			// Making a request to url and getting response
 			String jsonStr = sh.makeServiceCall(
-					getResources().getString(R.string.url_list_doctor),
+					URLs.url_list_doctor,
 					ServiceHandler.GET);
 
 			Log.d("Response: ", "> " + jsonStr);
