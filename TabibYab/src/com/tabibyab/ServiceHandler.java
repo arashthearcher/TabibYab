@@ -151,7 +151,7 @@ public class ServiceHandler {
                 // appending params to url
                 if (params != null) {
                 	String paramString = URLEncodedUtils.format(params, "utf-8");
-                	if(params.size()==1 && url.equals(URLs.url_doctor_comments))    //TODO get request in server is not standard!!!
+                	if(params.size()==1 && !url.equals(URLs.url_doctor_comments))    //TODO get request in server is not standard!!!
                 		url+=paramString.substring(paramString.indexOf("=")+1);
                 	else
                 		url += "?" + paramString;

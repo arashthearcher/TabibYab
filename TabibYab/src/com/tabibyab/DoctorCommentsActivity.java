@@ -61,7 +61,7 @@ public class DoctorCommentsActivity extends Activity implements
 		protected Void doInBackground(Void... arg0) {
 			ServiceHandler sh = new ServiceHandler();
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("id", Integer
+			nameValuePairs.add(new BasicNameValuePair("clinic", Integer
 					.toString(doctor_id)));
 			String jsonStr = sh.makeServiceCall(URLs.url_doctor_comments,
 					ServiceHandler.GET, nameValuePairs);
