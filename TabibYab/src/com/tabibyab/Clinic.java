@@ -1,5 +1,8 @@
 package com.tabibyab;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.android.gms.maps.model.Marker;
 
 public class Clinic {
@@ -9,19 +12,34 @@ public class Clinic {
 	String name;
 	double rating;
 	Marker marker = null;
-	Coordinate coordinate;
+	Coordinate coordinates;
 	String type;
 	String appointmentOnly;
 	
 	
 	
+	public Clinic(JSONObject jo) {
+		
+		try {
+			this.id = Integer.parseInt(jo.getString(TAGS.TAG_ID));
+		    this.name = jo.getString(TAGS.TAG_NAME);
+		    this.coordinates = new Coordinate(jo.getString(TAGS.TAG_COORDINATES));
+		    this.type = jo.getString(TAGS.TAG_TYPE);
+		    this.appointmentOnly = jo.getString(TAGS.TAG_APPOINMENT);
+		    
+        } catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	public Clinic(int id, String name, Coordinate coordinate, String type, String appointmentOnly) {
 		// TODO Auto-generated constructor stub
 		this.id = id ;
 		this.name = name ;
-		this.coordinate = coordinate ;
+		this.coordinates = coordinate ;
 		this.type = type;
 		this.appointmentOnly = appointmentOnly;
 		
@@ -32,7 +50,7 @@ public class Clinic {
 		// TODO Auto-generated constructor stub
 		this.id = id ;
 		this.name = name ;
-		this.coordinate = coordinate ;
+		this.coordinates = coordinate ;
 		
 		
 	}
@@ -73,13 +91,13 @@ public class Clinic {
 	}
 
 
-	public Coordinate getCoordinate() {
-		return coordinate;
+	public Coordinate getCoordinates() {
+		return coordinates;
 	}
 
 
-	public void setCoordinate(Coordinate coordinate) {
-		this.coordinate = coordinate;
+	public void setCoordinates(Coordinate coordinate) {
+		this.coordinates = coordinate;
 	}
 
 
@@ -112,6 +130,12 @@ public class Clinic {
 	public boolean equals(Object o) {
 		// TODO Auto-generated method stub
 		return ((Clinic)o).id == this.id ;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "( " +this.name +" , "+this.coordinates +" )";
 	}
 	
 }

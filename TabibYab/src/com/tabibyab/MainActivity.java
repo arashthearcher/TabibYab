@@ -1,6 +1,7 @@
 package com.tabibyab;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +43,8 @@ public class MainActivity extends Activity implements
 	private ProgressDialog pDialog;
 
 	// Hashmap for ListView
-	ArrayList<HashMap<String, String>> clinicList;
+	ArrayList<Clinic> clinicList;
+	HashMap<Marker, Clinic> markerClinicMap;
 
 	private static final long ONE_MIN = 1000 * 60;
 	private static final long TWO_MIN = ONE_MIN * 2;
@@ -75,7 +77,8 @@ public class MainActivity extends Activity implements
 		gMap.getUiSettings().setMyLocationButtonEnabled(true);
 		gMap.getUiSettings().setRotateGesturesEnabled(true);
 
-		clinicList = new ArrayList<HashMap<String, String>>();
+		clinicList = new ArrayList<Clinic>();
+		markerClinicMap = new HashMap<Marker, Clinic>();
 
 		// Create new Location Client. This class will handle callbacks
 		mLocationClient = new LocationClient(this, this, this);
@@ -277,37 +280,36 @@ public class MainActivity extends Activity implements
 
 	}
 
-	public void showClinicsOnMap(
-			final ArrayList<HashMap<String, String>> clinicList) {
+	public void showClinicsOnMap(final ArrayList<Clinic> clinicList) {
 		if (gMap != null) {
 
-			Coordinate c = null;
+
 			for (int i = 0; i < clinicList.size(); i++) {
 
-				c = new Coordinate(clinicList.get(i).get(TAGS.TAG_COORDINATES));
-				gMap.addMarker(new MarkerOptions().position(
-						new LatLng(c.lat, c.lng)).title(
-						clinicList.get(i).get(TAGS.TAG_NAME)));
-				gMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
-
-					@Override
-					public void onInfoWindowClick(Marker marker) {
-						try {
-							Log.d("Test", marker.getId());
-							Intent DoctorInfintent = new Intent(
-									MainActivity.this, DoctorInfActivity.class);
-							DoctorInfintent.putExtra("doctor_id", 1);
-							startActivity(DoctorInfintent);
-						} catch (ArrayIndexOutOfBoundsException e) {
-							Log.e("ArrayIndexOutOfBoundsException", " Occured");
-						}
-
-					}
-				});
-				if (c != null)
+				Clinic clinic = clinicList.get(i);
+				Marker marker = gMap.addMarker(new MarkerOptions().position(
+						new LatLng(clinic.getCoordinates().getLat(), clinic.getCoordinates().getLng())).title(
+						clinic.getName()));
+				
+				markerClinicMap.put(marker, clinic);
+				
+				
+				if (mCurrentLocation != null)
 					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-							new LatLng(c.lat, c.lng), 11));
+							new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 11));
 			}
+			
+			gMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+
+				@Override
+				public void onInfoWindowClick(Marker marker) {
+						Intent DoctorInfintent = new Intent(MainActivity.this, DoctorInfActivity.class);
+						Clinic clinic = markerClinicMap.get(marker);
+						DoctorInfintent.putExtra("doctor_id", clinic.getId());
+						startActivity(DoctorInfintent);
+				}
+			});
+
 
 		}
 	}
@@ -338,7 +340,7 @@ public class MainActivity extends Activity implements
 
 			Log.d("Response: ", "> " + jsonStr);
 
-			clinicList = sh.parseClinicList(jsonStr);
+			clinicList = sh.parseClinics(jsonStr);
 
 			return null;
 		}

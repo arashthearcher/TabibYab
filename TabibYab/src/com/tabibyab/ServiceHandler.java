@@ -33,8 +33,32 @@ public class ServiceHandler {
  
     }
     
+    public ArrayList<Clinic> parseClinics(String jsonStr)
+    {
+    	ArrayList<Clinic> clinicList = new ArrayList<Clinic>();
+        if (jsonStr != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonStr);
+
+                
+                // Getting JSON Array node
+                 JSONArray clinics = jsonObj.getJSONArray(TAGS.TAG_RESULTS);
+
+                // looping through All Contacts
+                for (int i = 0; i < clinics.length(); i++) {
+                    JSONObject c = clinics.getJSONObject(i);
+                    clinicList.add(new Clinic(c));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("ServiceHandler", "Couldn't get any data from the url");
+        }
+        return clinicList;
+    }
     
-    
+    @Deprecated
     public ArrayList<HashMap<String, String>> parseClinicList(String jsonStr)
     {
     	ArrayList<HashMap<String, String>> clinicList = new ArrayList<HashMap<String, String>>();
