@@ -7,19 +7,18 @@
     android:paddingRight="16dp" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/doctor_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"
-        android:text="عنوان"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/doctor_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Medium Text"
+        android:layout_gravity="center"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button

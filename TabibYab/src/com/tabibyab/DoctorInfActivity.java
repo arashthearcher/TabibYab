@@ -73,15 +73,17 @@ public class DoctorInfActivity extends Activity {
 	}
 	public void showDoctor()
 	{
+		TextView doc_name =(TextView) findViewById(R.id.doctor_name);
+		doc_name.setText(doctor.get(TAGS.TAG_NAME));
 		TextView text_id = new TextView(this);
 		text_id = (TextView) findViewById(R.id.doctor_id);
-		text_id.setText("شماره = " + Integer.toString(doctor_id)+"\nنام="+doctor.get(TAGS.TAG_NAME)+"\nنوع="+doctor.get(TAGS.TAG_TYPE));
+		text_id.setText("شماره = " + Integer.toString(doctor_id)+"\nنوع="+doctor.get(TAGS.TAG_TYPE));
 		Button cmnt_button = (Button) findViewById(R.id.cmntBtn);
 		cmnt_button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent comments_view = new Intent(DoctorInfActivity.this, DoctorCommentsActivity.class);
-				comments_view.putExtra("doctor_id", 1);
+				comments_view.putExtra("doctor_id", doctor_id);
 				startActivity(comments_view);
 				}
 		});
