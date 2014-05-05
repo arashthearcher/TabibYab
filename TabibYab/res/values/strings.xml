@@ -2,7 +2,7 @@
 <resources>
 
     
-    
+    <string name="dialog_location_not_found">برنامه قادر به تعیین مشخصات جغرافیایی نیست، لطفا در تنظیمات مشخصات جغرافیایی را فعال کنید </string>
     <string name="lat_tehran">35.6980799999999974</string>
     <string name="lng_tehran">51.4050659999999979</string>
     <string name="ok">تایید</string>

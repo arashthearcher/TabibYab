@@ -1,17 +1,12 @@
 package com.tabibyab;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.HashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -32,12 +27,11 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.PopupWindow;
+
 
 public class MainActivity extends Activity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
+		GooglePlayServicesClient.OnConnectionFailedListener{
 
 	private GoogleMap gMap;
 	private ProgressDialog pDialog;
@@ -46,23 +40,12 @@ public class MainActivity extends Activity implements
 	ArrayList<Clinic> clinicList;
 	HashMap<Marker, Clinic> markerClinicMap;
 
-	private static final long ONE_MIN = 1000 * 60;
-	private static final long TWO_MIN = ONE_MIN * 2;
-	private static final long FIVE_MIN = ONE_MIN * 5;
-	private static final long MEASURE_TIME = 1000 * 30;
-	private static final long POLLING_FREQ = 1000 * 10;
-	private static final long FASTES_UPDATE_FREQ = 1000 * 2;
-	private static final float MIN_ACCURACY = 500.0f;
-	private static final float MIN_LAST_READ_ACCURACY = 1000.0f;
+
 
 	// Define an object that holds accuracy and frequency parameters
-	LocationRequest mLocationRequest;
 	private final String TAG = "LocationGetLocationActivity";
-	private Location mBestReading;
-	private boolean mFirstUpdate = true;
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
-
 	private Circle circle = null;
 
 	@Override
@@ -82,21 +65,16 @@ public class MainActivity extends Activity implements
 
 		// Create new Location Client. This class will handle callbacks
 		mLocationClient = new LocationClient(this, this, this);
+		
 
-		// Create and define the LocationRequest
-		mLocationRequest = LocationRequest.create();
-
-		// Use high accuracy
-		mLocationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
-
-		// Update every 10 seconds
-		mLocationRequest.setInterval(POLLING_FREQ);
-
-		// Recieve updates no more often than every 2 seconds
-		mLocationRequest.setFastestInterval(FASTES_UPDATE_FREQ);
 
 	}
 
+	
+	
+	
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -129,8 +107,6 @@ public class MainActivity extends Activity implements
 	@Override
 	protected void onStop() {
 
-		// Stop updates
-		mLocationClient.removeLocationUpdates(this);
 
 		// Disconnect from LocationServices
 		mLocationClient.disconnect();
@@ -141,102 +117,21 @@ public class MainActivity extends Activity implements
 	// Called back when location changes
 
 	@Override
-	public void onLocationChanged(Location location) {
-
-		// Determine whether new location is better than current best
-		// estimate
-
-		if (null == mBestReading
-				|| location.getAccuracy() < mBestReading.getAccuracy()) {
-
-			// Update best estimate
-			mBestReading = location;
-
-			// Update display
-			updateLocation(location);
-
-			if (mBestReading.getAccuracy() < MIN_ACCURACY)
-				mLocationClient.removeLocationUpdates(this);
-
-		}
-	}
-
-	@Override
 	public void onConnected(Bundle dataBundle) {
 
 		// Get first reading. Get additional location updates if necessary
-
-		if (servicesAvailable()) {
-			// Get best last location measurement meeting criteria
-			mBestReading = bestLastKnownLocation(MIN_LAST_READ_ACCURACY,
-					FIVE_MIN);
-
-			// Display last reading information
-			if (null != mBestReading) {
-
-				updateLocation(mBestReading);
-
-			} else {
-
-				Log.i(TAG, "No Initial Reading Available");
-
-			}
-
-			if (null == mBestReading
-					|| mBestReading.getAccuracy() > MIN_LAST_READ_ACCURACY
-					|| mBestReading.getTime() < System.currentTimeMillis()
-							- TWO_MIN) {
-
-				mLocationClient.requestLocationUpdates(mLocationRequest, this);
-
-				// Schedule a runnable to unregister location listeners
-				Executors.newScheduledThreadPool(1).schedule(new Runnable() {
-
-					@Override
-					public void run() {
-
-						mLocationClient.removeLocationUpdates(MainActivity.this);
-
-					}
-				}, MEASURE_TIME, TimeUnit.MILLISECONDS);
-			}
-
-		}
-	}
-
-	// Get the last known location from all providers
-	// return best reading is as accurate as minAccuracy and
-	// was taken no longer then minTime milliseconds ago
-
-	private Location bestLastKnownLocation(float minAccuracy, long minTime) {
-
-		Location bestResult = null;
-		float bestAccuracy = Float.MAX_VALUE;
-		long bestTime = Long.MIN_VALUE;
-
-		// Get the best most recent location currently available
+		
 		mCurrentLocation = mLocationClient.getLastLocation();
-
-		if (mCurrentLocation != null) {
-
-			float accuracy = mCurrentLocation.getAccuracy();
-			long time = mCurrentLocation.getTime();
-
-			if (accuracy < bestAccuracy) {
-
-				bestResult = mCurrentLocation;
-				bestAccuracy = accuracy;
-				bestTime = time;
-
-			}
+		if(mCurrentLocation != null)
+		{
+			updateClinicList();
+		}
+		else
+		{
+			new LocationNotFoundAlertDialog().show(getFragmentManager(), "LocationNotFound");
 		}
 
-		// Return best reading or null
-		if (bestAccuracy > minAccuracy || bestTime < minTime) {
-			return null;
-		} else {
-			return bestResult;
-		}
+
 	}
 
 	@Override
@@ -263,7 +158,7 @@ public class MainActivity extends Activity implements
 
 	}
 
-	private void updateLocation(Location location) {
+	private void updateClinicList() {
 
 		// Calling async task to get json
 		new GetClinics().execute();
@@ -274,7 +169,7 @@ public class MainActivity extends Activity implements
 
 		}
 		circle = gMap.addCircle(new CircleOptions()
-				.center(new LatLng(mBestReading.getLatitude(), mBestReading
+				.center(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation
 						.getLongitude())).radius(10000).strokeWidth(3)
 				.strokeColor(Color.BLUE));
 
