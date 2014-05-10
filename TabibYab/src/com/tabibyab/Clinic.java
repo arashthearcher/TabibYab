@@ -10,7 +10,7 @@ public class Clinic {
 	
 	int id;
 	String name;
-	double rating;
+	float rating =0;
 	Marker marker = null;
 	Coordinate coordinates;
 	String type;
@@ -25,6 +25,7 @@ public class Clinic {
 		    this.name = jo.getString(TAGS.TAG_NAME);
 		    this.coordinates = new Coordinate(jo.getString(TAGS.TAG_COORDINATES));
 		    this.type = jo.getString(TAGS.TAG_TYPE);
+		    this.rating = Float.parseFloat(jo.getString(TAGS.TAG_RATING));
 		    
         } catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -80,12 +81,12 @@ public class Clinic {
 	}
 
 
-	public double getRating() {
+	public float getRating() {
 		return rating;
 	}
 
 
-	public void setRating(double rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 

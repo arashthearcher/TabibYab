@@ -17,5 +17,6 @@ public class TAGS {
     public static final String TAG_TYPE = "type";
     public static final String TAG_APPOINMENT = "appointmentOnly";
     public static final String TAG_CLINIC = "clinic";
+    public static final String TAG_RATING = "rating";
     public static final String TAG_COMMENT = "comment";
 }
