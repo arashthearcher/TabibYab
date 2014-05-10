@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,7 +79,6 @@ public class ServiceHandler {
                     String name = c.getString(TAGS.TAG_NAME);
                     String coordinates = c.getString(TAGS.TAG_COORDINATES);
                     String type = c.getString(TAGS.TAG_TYPE);
-                    String appointmentOnly = c.getString(TAGS.TAG_APPOINMENT);
                     
                     
                     // tmp hashmap for single contact
@@ -89,7 +89,6 @@ public class ServiceHandler {
                     clinic.put(TAGS.TAG_ID, id);
                     clinic.put(TAGS.TAG_NAME, name);
                     clinic.put(TAGS.TAG_TYPE, type);
-                    clinic.put(TAGS.TAG_APPOINMENT, appointmentOnly);
                     clinic.put(TAGS.TAG_COORDINATES, coordinates);
                     
                     
@@ -166,7 +165,9 @@ public class ServiceHandler {
                 HttpPost httpPost = new HttpPost(url);
                 // adding post params
                 if (params != null) {
-                    httpPost.setEntity(new UrlEncodedFormEntity(params));
+                	UrlEncodedFormEntity form = new UrlEncodedFormEntity(params,"UTF-8");
+                	form.setContentEncoding(HTTP.UTF_8);
+                    httpPost.setEntity(form);
                 }
  
                 httpResponse = httpClient.execute(httpPost);

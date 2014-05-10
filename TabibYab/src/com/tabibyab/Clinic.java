@@ -25,7 +25,6 @@ public class Clinic {
 		    this.name = jo.getString(TAGS.TAG_NAME);
 		    this.coordinates = new Coordinate(jo.getString(TAGS.TAG_COORDINATES));
 		    this.type = jo.getString(TAGS.TAG_TYPE);
-		    this.appointmentOnly = jo.getString(TAGS.TAG_APPOINMENT);
 		    
         } catch (JSONException e) {
 			// TODO Auto-generated catch block

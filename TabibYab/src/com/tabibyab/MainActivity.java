@@ -9,6 +9,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.Circle;
@@ -27,6 +28,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity implements
@@ -193,7 +197,24 @@ public class MainActivity extends Activity implements
 					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
 							new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 11));
 			}
-			
+			gMap.setInfoWindowAdapter(new InfoWindowAdapter() {
+	            @Override
+	            public View getInfoWindow(Marker arg0) {
+	                return null;
+	            }
+	            @Override
+	            public View getInfoContents(Marker marker) {
+	                View v = getLayoutInflater().inflate(R.layout.info_window_layout, null);
+	                Clinic clinic = markerClinicMap.get(marker);
+	                TextView tvName = (TextView) v.findViewById(R.id.tv_name);
+	                TextView tvType = (TextView) v.findViewById(R.id.tv_type);
+	                RatingBar rating = (RatingBar)v.findViewById(R.id.rating);
+	                rating.setRating(4);
+	                tvName.setText( clinic.name);
+	                tvType.setText( clinic.type);
+	                return v;
+	            }
+	        });
 			gMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 				@Override

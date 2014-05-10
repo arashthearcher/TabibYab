@@ -16,5 +16,12 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    
+    <style name="appleRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/apple_ratingbar</item>
+        <item name="android:minHeight">22dip</item>
+        <item name="android:maxHeight">32dip</item>
+    </style>
 
 </resources>
