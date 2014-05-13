@@ -2,6 +2,7 @@ package com.tabibyab;
 
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
  
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -22,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
  
 public class ServiceHandler {
@@ -34,7 +38,7 @@ public class ServiceHandler {
  
     }
     
-    public ArrayList<Clinic> parseClinics(String jsonStr)
+    public ArrayList<Clinic> parseClinics(String jsonStr,boolean detail)
     {
     	ArrayList<Clinic> clinicList = new ArrayList<Clinic>();
         if (jsonStr != null) {
@@ -48,7 +52,7 @@ public class ServiceHandler {
                 // looping through All Contacts
                 for (int i = 0; i < clinics.length(); i++) {
                     JSONObject c = clinics.getJSONObject(i);
-                    clinicList.add(new Clinic(c));
+                    clinicList.add(new Clinic(c,detail));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -58,6 +62,10 @@ public class ServiceHandler {
         }
         return clinicList;
     }
+    
+    
+    
+    
     
     @Deprecated
     public ArrayList<HashMap<String, String>> parseClinicList(String jsonStr)
@@ -225,4 +233,55 @@ public class ServiceHandler {
         }
         return doctor;
     }
+    
+    public Bitmap downloadBitmap(String url) {
+        // initilize the default HTTP client object
+        final DefaultHttpClient client = new DefaultHttpClient();
+
+        //forming a HttoGet request 
+        final HttpGet getRequest = new HttpGet(url);
+        try {
+
+            HttpResponse response = client.execute(getRequest);
+
+            //check 200 OK for success
+            final int statusCode = response.getStatusLine().getStatusCode();
+
+            if (statusCode != HttpStatus.SC_OK) {
+                Log.w("ImageDownloader", "Error " + statusCode + 
+                        " while retrieving bitmap from " + url);
+                return null;
+
+            }
+
+            final HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                InputStream inputStream = null;
+                try {
+                    // getting contents from the stream 
+                    inputStream = entity.getContent();
+
+                    // decoding stream data back into image Bitmap that android understands
+                    final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+                    return bitmap;
+                } finally {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    entity.consumeContent();
+                }
+            }
+        } catch (Exception e) {
+            // You Could provide a more explicit error message for IOException
+            getRequest.abort();
+            Log.e("ImageDownloader", "Something went wrong while" +
+                    " retrieving bitmap from " + url + e.toString());
+        } 
+
+        return null;
+    }
+    
+    
+    
 }

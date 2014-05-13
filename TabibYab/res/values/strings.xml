@@ -32,5 +32,7 @@
      <string name="commenter_name">نام نظر دهنده</string>
     
      <string name="comment_text">متن نظر</string>
+    
+     <string name="Score">امتیاز</string>
 
 </resources>

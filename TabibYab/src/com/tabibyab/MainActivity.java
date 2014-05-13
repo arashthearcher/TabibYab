@@ -73,11 +73,6 @@ public class MainActivity extends Activity implements
 
 
 	}
-
-	
-	
-	
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,7 +88,6 @@ public class MainActivity extends Activity implements
 			Intent addClinicIntent = new Intent(MainActivity.this,
 					AddClinicActivity.class);
 			startActivity(addClinicIntent);
-
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -103,18 +97,14 @@ public class MainActivity extends Activity implements
 	@Override
 	protected void onStart() {
 		super.onStart();
-
 		// Connect to LocationServices
 		mLocationClient.connect();
 	}
 
 	@Override
 	protected void onStop() {
-
-
 		// Disconnect from LocationServices
 		mLocationClient.disconnect();
-
 		super.onStop();
 	}
 
@@ -134,8 +124,6 @@ public class MainActivity extends Activity implements
 		{
 			new LocationNotFoundAlertDialog().show(getFragmentManager(), "LocationNotFound");
 		}
-
-
 	}
 
 	@Override
@@ -189,10 +177,7 @@ public class MainActivity extends Activity implements
 				Marker marker = gMap.addMarker(new MarkerOptions().position(
 						new LatLng(clinic.getCoordinates().getLat(), clinic.getCoordinates().getLng())).title(
 						clinic.getName()));
-				
 				markerClinicMap.put(marker, clinic);
-				
-				
 				if (mCurrentLocation != null)
 					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
 							new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 11));
@@ -209,7 +194,7 @@ public class MainActivity extends Activity implements
 	                TextView tvName = (TextView) v.findViewById(R.id.tv_name);
 	                TextView tvType = (TextView) v.findViewById(R.id.tv_type);
 	                RatingBar rating = (RatingBar)v.findViewById(R.id.rating);
-	                rating.setRating( clinic.getRating());
+	                rating.setRating( (float) clinic.getRating());
 	                tvName.setText( clinic.getName());
 	                tvType.setText( clinic.getType());
 	                return v;
@@ -256,7 +241,7 @@ public class MainActivity extends Activity implements
 
 			Log.d("Response: ", "> " + jsonStr);
 
-			clinicList = sh.parseClinics(jsonStr);
+			clinicList = sh.parseClinics(jsonStr,false);
 
 			return null;
 		}

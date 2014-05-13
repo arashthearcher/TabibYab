@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -28,6 +29,7 @@ public class AddCommentActivity extends Activity {
 	private ProgressDialog pDialog;
 	private EditText name = null;
 	private EditText commText = null;
+	private RatingBar totalRating = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class AddCommentActivity extends Activity {
 		doctor_id = AddCommentintent.getIntExtra("doctor_id", 1);
 		name = (EditText) findViewById(R.id.commenter_name);
 		commText = (EditText) findViewById(R.id.comment_text);
+		totalRating = (RatingBar) findViewById(R.id.ratingTotal);
 		Button button = (Button) findViewById(R.id.add_main_comment);
 		button.setOnClickListener(new OnClickListener() {
 			@Override
@@ -72,6 +75,7 @@ public class AddCommentActivity extends Activity {
 			params.add(new DetailNameValuePair(TAGS.TAG_COMMENT, commText
 					.getText().toString()));
 			params.add(new DetailNameValuePair(TAGS.TAG_CLINIC, Integer.toString(doctor_id)));
+			params.add(new DetailNameValuePair(TAGS.TAG_RATING, Float.toString(totalRating.getRating())));
 			sh.makeServiceCall(URLs.url_doctor_comments, ServiceHandler.POST,
 					(List) params);
 			return null;

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:minHeight="20dp"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
@@ -10,27 +11,50 @@
         android:id="@+id/commenter_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="@string/commenter_name"
         android:inputType="textPersonName" >
 
         <requestFocus />
     </EditText>
 
-    <EditText
-        android:id="@+id/comment_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.16"
-        android:ems="10"
-        android:hint="@string/comment_text"
-        android:inputType="textMultiLine" />
 
-    <Button
-        android:id="@+id/add_main_comment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/add_comment" />
+<RatingBar
+    android:id="@+id/ratingTotal"
+    style="@style/appleRatingBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBottom="@+id/add_main_comment"
+    android:layout_alignLeft="@+id/comment_text"
+    android:layout_marginBottom="65dp" />
 
-</LinearLayout>
+<Button
+    android:id="@+id/add_main_comment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/ratingTotal"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="66dp"
+    android:text="@string/add_comment" />
+
+<TextView
+    android:id="@+id/textView1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignRight="@+id/add_main_comment"
+    android:layout_alignTop="@+id/ratingTotal"
+    android:text="@string/Score"
+    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+<EditText
+    android:id="@+id/comment_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/commenter_name"
+    android:layout_below="@+id/commenter_name"
+    android:layout_weight="0.16"
+    android:ems="10"
+    android:hint="@string/comment_text"
+    android:inputType="textMultiLine"
+    android:minHeight="220dp" />
+
+</RelativeLayout>

@@ -1,7 +1,13 @@
 package com.tabibyab;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.graphics.Bitmap;
+import android.util.Pair;
 
 import com.google.android.gms.maps.model.Marker;
 
@@ -10,22 +16,50 @@ public class Clinic {
 	
 	int id;
 	String name;
-	float rating =0;
+	double rating;
 	Marker marker = null;
 	Coordinate coordinates;
 	String type;
 	String appointmentOnly;
+	String speciality;
+	String websiteAddress;
+	String address;
+	String description;
+	Bitmap profilePic;
+	String profilePicAddress;
+	ArrayList<PhoneNumber> phoneNumbers;
+	ArrayList<OperatingHour> operatingHours;
+	ArrayList<String> pictureURLs;
+	ArrayList<Bitmap> pictures;
+	ArrayList<String> insurances;
+	boolean detail ; // determines if the clinic is constructed from a detail view JSON or list view JSON
 	
-	
-	
-	public Clinic(JSONObject jo) {
+	public Clinic(JSONObject jo,boolean detail) {
 		
+		this.detail = detail;
 		try {
 			this.id = Integer.parseInt(jo.getString(TAGS.TAG_ID));
 		    this.name = jo.getString(TAGS.TAG_NAME);
 		    this.coordinates = new Coordinate(jo.getString(TAGS.TAG_COORDINATES));
 		    this.type = jo.getString(TAGS.TAG_TYPE);
-		    this.rating = Float.parseFloat(jo.getString(TAGS.TAG_RATING));
+		    this.rating = jo.getDouble(TAGS.TAG_RATING);
+		    this.speciality = jo.getString(TAGS.TAG_SPECIALITY);
+		    this.address = jo.getString(TAGS.TAG_ADDRESS);
+		    this.profilePicAddress = jo.getString(TAGS.TAG_PROFILE_IMAGE);
+		    
+		    if (detail)
+		    {
+		    	this.description = jo.getString(TAGS.TAG_DESCRIPTION);
+		    	this.websiteAddress = jo.getString(TAGS.TAG_WEBSITE_ADDRESS);
+		    	
+		    	
+		    	JSONArray phoneNumbersJSON = jo.getJSONArray(TAGS.TAG_PHONE_NUMBERS);
+		    	parsePhoneNumbers(phoneNumbersJSON);
+		    	
+		    	JSONArray OHJSON = jo.getJSONArray(TAGS.TAG_OPERATING_HOURS);
+		    	parseOperatingHours(OHJSON);
+		    	
+		    }
 		    
         } catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -34,6 +68,31 @@ public class Clinic {
 		
 	}
 	
+	
+	public void parsePhoneNumbers(JSONArray phoneNumbersJSON) throws JSONException
+	{
+		if (phoneNumbersJSON.length()>0)
+		{
+			this.phoneNumbers = new ArrayList<PhoneNumber>();
+			for (int i = 0; i < phoneNumbersJSON.length(); i++) {
+	            JSONObject phoneNumber = phoneNumbersJSON.getJSONObject(i);
+	            this.phoneNumbers.add(new PhoneNumber(phoneNumber));
+	        }
+		}
+	}
+	
+	
+	public void parseOperatingHours(JSONArray OHJSON) throws JSONException
+	{
+		if (OHJSON.length()>0)
+		{
+			this.operatingHours = new ArrayList<OperatingHour>();
+			for (int i = 0; i < OHJSON.length(); i++) {
+	            JSONObject operatingHour = OHJSON.getJSONObject(i);
+	            this.operatingHours.add(new OperatingHour(operatingHour));
+	        }
+		}
+	}
 	
 	public Clinic(int id, String name, Coordinate coordinate, String type, String appointmentOnly) {
 		// TODO Auto-generated constructor stub
@@ -81,12 +140,12 @@ public class Clinic {
 	}
 
 
-	public float getRating() {
+	public double getRating() {
 		return rating;
 	}
 
 
-	public void setRating(float rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
