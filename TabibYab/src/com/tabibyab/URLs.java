@@ -1,7 +1,7 @@
 package com.tabibyab;
 
 public class URLs {
-	static String IP = "http://213.233.171.242:8001";
+	static String IP = "http://19.168.1.100:8000";
 	
 	static String url_list_doctor = IP + "/search/";
 	static String url_doctor_info = IP + "/doctor/";

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<string name="Score">امتیاز</string>
     <string name="action_search">جست و جو</string>
     <string name="search_hint">جست و جوی دکتر</string>
     <string name="dialog_location_not_found">برنامه قادر به تعیین مشخصات جغرافیایی نیست، لطفا در تنظیمات مشخصات جغرافیایی را فعال کنید </string>
