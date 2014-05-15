@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -44,7 +46,7 @@ public class MainActivity extends Activity implements
 
 	private GoogleMap gMap;
 	private ProgressDialog pDialog;
-
+	String query = null ;
 	// Hashmap for ListView
 	ArrayList<Clinic> clinicList;
 	HashMap<Marker, Clinic> markerClinicMap;
@@ -57,6 +59,9 @@ public class MainActivity extends Activity implements
 	private Location mCurrentLocation;
 	private Circle circle = null;
 
+	
+	private boolean useExistingClinicList = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,6 +79,16 @@ public class MainActivity extends Activity implements
 
 		// Create new Location Client. This class will handle callbacks
 		mLocationClient = new LocationClient(this, this, this);
+		
+		Intent intent = getIntent();
+		useExistingClinicList = intent.getBooleanExtra("useExistingClinicList", false) ;
+		
+		if(useExistingClinicList)
+		{
+			clinicList = ((MyApplication) getApplicationContext()).getClinicList();
+			mCurrentLocation = ((MyApplication) getApplicationContext()).getCurrentLocation();
+			this.showClinicsOnMap(clinicList);
+		}
 		
 
 
@@ -110,11 +125,35 @@ public class MainActivity extends Activity implements
 					AddClinicActivity.class);
 			startActivity(addClinicIntent);
 			return true;
+		case R.id.clinicListView:
+			Intent clinicListIntent = new Intent(MainActivity.this,
+					SearchActivity.class);
+			clinicListIntent.putExtra("useExistingClinicList", true);
+			((MyApplication) getApplicationContext()).setClinicList(clinicList);
+			startActivity(clinicListIntent);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+	    setIntent(intent);
+	    clinicList.clear();
+	    markerClinicMap.clear();
+	    gMap.clear();
+	    handleIntent(intent);
+	}
+	
+	private void handleIntent(Intent intent) {
+	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	    	if(intent.hasExtra(SearchManager.QUERY))
+	    		query = intent.getStringExtra(SearchManager.QUERY);
+	    }
+	    new GetClinics().execute();
+	}
+	
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -139,7 +178,9 @@ public class MainActivity extends Activity implements
 		mCurrentLocation = mLocationClient.getLastLocation();
 		if(mCurrentLocation != null)
 		{
-			updateClinicList();
+			((MyApplication) getApplicationContext()).setCurrentLocation(mCurrentLocation);
+			if(!useExistingClinicList)
+				updateClinicList();
 		}
 		else
 		{
@@ -253,16 +294,22 @@ public class MainActivity extends Activity implements
 		protected Void doInBackground(Void... arg0) {
 
 			// Creating service handler class instance
-			ServiceHandler sh = new ServiceHandler();
+			
+						ServiceHandler sh = new ServiceHandler();
+						ArrayList<NameValuePair> queryList = null;
+						if(getIntent().hasExtra(SearchManager.QUERY) && query != null && !query.equals(""))
+						{
+							queryList = new ArrayList<NameValuePair>();
+							queryList.add(new DetailNameValuePair("name", query));
+						}
+						// Making a request to url and getting response
+						String jsonStr = sh.makeServiceCall(
+								URLs.url_list_doctor,
+								ServiceHandler.GET,queryList);
 
-			// Making a request to url and getting response
-			String jsonStr = sh.makeServiceCall(
-					URLs.url_list_doctor,
-					ServiceHandler.GET);
+						Log.d("Response: ", "> " + jsonStr);
 
-			Log.d("Response: ", "> " + jsonStr);
-
-			clinicList = sh.parseClinics(jsonStr,false);
+						clinicList = sh.parseClinics(jsonStr,false);
 
 			return null;
 		}

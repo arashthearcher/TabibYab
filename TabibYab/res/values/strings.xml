@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="Score">امتیاز</string>
+	<string name="show_on_map">مشاهده برروی نقشه</string>
+	<string name="show_as_list">مشاهده به صورت لیست</string>
     <string name="action_search">جست و جو</string>
     <string name="search_hint">جست و جوی دکتر</string>
     <string name="dialog_location_not_found">برنامه قادر به تعیین مشخصات جغرافیایی نیست، لطفا در تنظیمات مشخصات جغرافیایی را فعال کنید </string>
@@ -15,6 +17,8 @@
     <string name="clinic_name">عنوان</string>
     <string name="dialog_confirm_add_clinic">مرکز درمانی جدید اضافه شود؟</string>
     <string name="clinic_type">نوع مرکز درمانی</string>
+    <string name="clinic_speciality">تخصص</string>
+    <string name="address">آدرس</string>
     <string name="select_location">ثبت دقیق مکان برروی نقشه</string>
     <string-array name="clinic_types">
         <item>بیمارستان</item>
@@ -25,7 +29,7 @@
      
     
      <string name="doctor_info">اطلاعات مرکز درمانی</string>
-    
+     <string name="clinic_list">لیست مراکز درمانی</string>
      <string name="Comments_View">مشاهده نظرات</string>
     
      <string name="add_comment">افزودن نظر</string>

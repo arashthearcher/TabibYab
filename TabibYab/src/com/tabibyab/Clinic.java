@@ -196,5 +196,125 @@ public class Clinic {
 		// TODO Auto-generated method stub
 		return "( " +this.name +" , "+this.coordinates +" )";
 	}
+
+
+	public String getSpeciality() {
+		return speciality;
+	}
+
+
+	public void setSpeciality(String speciality) {
+		this.speciality = speciality;
+	}
+
+
+	public String getWebsiteAddress() {
+		return websiteAddress;
+	}
+
+
+	public void setWebsiteAddress(String websiteAddress) {
+		this.websiteAddress = websiteAddress;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public Bitmap getProfilePic() {
+		return profilePic;
+	}
+
+
+	public void setProfilePic(Bitmap profilePic) {
+		this.profilePic = profilePic;
+	}
+
+
+	public String getProfilePicAddress() {
+		return profilePicAddress;
+	}
+
+
+	public void setProfilePicAddress(String profilePicAddress) {
+		this.profilePicAddress = profilePicAddress;
+	}
+
+
+	public ArrayList<PhoneNumber> getPhoneNumbers() {
+		return phoneNumbers;
+	}
+
+
+	public void setPhoneNumbers(ArrayList<PhoneNumber> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
+	}
+
+
+	public ArrayList<OperatingHour> getOperatingHours() {
+		return operatingHours;
+	}
+
+
+	public void setOperatingHours(ArrayList<OperatingHour> operatingHours) {
+		this.operatingHours = operatingHours;
+	}
+
+
+	public ArrayList<String> getPictureURLs() {
+		return pictureURLs;
+	}
+
+
+	public void setPictureURLs(ArrayList<String> pictureURLs) {
+		this.pictureURLs = pictureURLs;
+	}
+
+
+	public ArrayList<Bitmap> getPictures() {
+		return pictures;
+	}
+
+
+	public void setPictures(ArrayList<Bitmap> pictures) {
+		this.pictures = pictures;
+	}
+
+
+	public ArrayList<String> getInsurances() {
+		return insurances;
+	}
+
+
+	public void setInsurances(ArrayList<String> insurances) {
+		this.insurances = insurances;
+	}
+
+
+	public boolean isDetail() {
+		return detail;
+	}
+
+
+	public void setDetail(boolean detail) {
+		this.detail = detail;
+	}
 	
 }
