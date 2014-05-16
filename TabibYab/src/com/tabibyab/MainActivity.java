@@ -26,6 +26,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
@@ -42,10 +43,16 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener{
+		GooglePlayServicesClient.OnConnectionFailedListener,SearchFilterDialog.NoticeDialogListener{
 
-	private GoogleMap gMap;
+	
+	private SearchFilterDialog searchFilterDialog;
 	private ProgressDialog pDialog;
+
+	private double searchDistant;
+	
+	
+	private GoogleMap gMap;
 	String query = null ;
 	// Hashmap for ListView
 	ArrayList<Clinic> clinicList;
@@ -132,11 +139,30 @@ public class MainActivity extends Activity implements
 			((MyApplication) getApplicationContext()).setClinicList(clinicList);
 			startActivity(clinicListIntent);
 			return true;
+		case R.id.searchFilterButton:
+			searchFilterDialog = new SearchFilterDialog();
+			searchFilterDialog.show(getFragmentManager(), "Filter Search Result");
+			
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // User touched the dialog's positive button
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        // User touched the dialog's negative button
+    }
+
+	
+	
+	
+	
 	@Override
 	protected void onNewIntent(Intent intent) {
 	    setIntent(intent);

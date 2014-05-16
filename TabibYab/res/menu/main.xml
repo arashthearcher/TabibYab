@@ -7,6 +7,14 @@
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item 
+        android:id="@+id/searchFilterButton"
+        android:icon="@drawable/filter" 
+        android:title="@string/show_as_list" 
+        android:enabled="true"
+        android:showAsAction="always" 
+        
+        android:visible="true"></item>
+    <item 
         android:id="@+id/clinicListView"
         android:icon="@drawable/ic_action_view_as_list" 
         android:title="@string/show_as_list" 

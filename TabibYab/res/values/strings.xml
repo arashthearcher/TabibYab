@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <string name="find">بگرد</string>
+    <string name="all">همه</string>
+    <string name="vicinity_of">حوالی</string>
+    <string name="less_than_1km">1 km</string>
+    <string name="less_than_2km">2 km</string>
+    <string name="less_than_3km">3 km</string>
+    <string name="less_than_4km">4 km</string>
+    <string name="distance_from_me">فاصله</string>
 	<string name="Score">امتیاز</string>
 	<string name="show_on_map">مشاهده برروی نقشه</string>
 	<string name="show_as_list">مشاهده به صورت لیست</string>
@@ -25,7 +34,12 @@
         <item>مطب</item>
         <item>کلینیک</item>
     </string-array>
-    
+    <string-array name="clinic_types_dialog_spinner">
+        <item>همه</item>
+        <item>بیمارستان</item>
+        <item>مطب</item>
+        <item>کلینیک</item>
+    </string-array>
      
     
      <string name="doctor_info">اطلاعات مرکز درمانی</string>
