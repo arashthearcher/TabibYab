@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/vicinityoftextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/vicinity_of" />
+
+    <EditText
+        android:id="@+id/vicinityOfAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPostalAddress" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/distant_from_me_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/distance_from_me" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ToggleButton
+            android:id="@+id/lessThan1kmButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/less_than_1km"
+            android:textOff="@string/less_than_1km"
+            android:textOn="@string/less_than_1km" />
+
+        <ToggleButton
+            android:id="@+id/lessThan2kmButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/less_than_2km"
+            android:textOff="@string/less_than_2km"
+            android:textOn="@string/less_than_2km" />
+
+        <ToggleButton
+            android:id="@+id/lessThan3kmButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/less_than_3km"
+            android:textOff="@string/less_than_3km"
+            android:textOn="@string/less_than_3km" />
+
+        <ToggleButton
+            android:id="@+id/lessThan4kmButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/less_than_4km"
+            android:textOff="@string/less_than_4km"
+            android:textOn="@string/less_than_4km" />
+        
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/clinicTypeTextViewDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/clinic_type" />
+
+    <Spinner
+        android:id="@+id/clinicTypeSpinnerDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/specialityTextViewDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/clinic_speciality" />
+
+    <Spinner
+        android:id="@+id/specialitySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
