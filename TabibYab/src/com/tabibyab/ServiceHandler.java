@@ -208,30 +208,33 @@ public class ServiceHandler {
  
     }
     
-    public HashMap<String, String> parseDoctorInfo(String jsonStr)
+    public Clinic parseDoctorInfo(String jsonStr)
     {
     	HashMap<String, String> doctor = new HashMap<String, String>();
+    	Clinic clinic = null;
         if (jsonStr != null) {
             try {
                 	JSONObject c = new JSONObject(jsonStr);
-                    String id = c.getString(TAGS.TAG_ID);
-                    String name = c.getString(TAGS.TAG_NAME);
-                    String coordinates = c.getString(TAGS.TAG_COORDINATES);
-                    String type = c.getString(TAGS.TAG_TYPE);
-                    String appointmentOnly = c.getString(TAGS.TAG_APPOINMENT);
-                    
-                    doctor.put(TAGS.TAG_ID, id);
-                    doctor.put(TAGS.TAG_NAME, name);
-                    doctor.put(TAGS.TAG_TYPE, type);
-                    doctor.put(TAGS.TAG_APPOINMENT, appointmentOnly);
-                    doctor.put(TAGS.TAG_COORDINATES, coordinates);
+                	clinic = new Clinic(c, true);
+//                    String id = c.getString(TAGS.TAG_ID);
+//                    String name = c.getString(TAGS.TAG_NAME);
+//                    String coordinates = c.getString(TAGS.TAG_COORDINATES);
+//                    String type = c.getString(TAGS.TAG_TYPE);
+//                    String appointmentOnly = c.getString(TAGS.TAG_APPOINMENT);
+//                    
+//                    doctor.put(TAGS.TAG_ID, id);
+//                    doctor.put(TAGS.TAG_NAME, name);
+//                    doctor.put(TAGS.TAG_TYPE, type);
+//                    doctor.put(TAGS.TAG_APPOINMENT, appointmentOnly);
+//                    doctor.put(TAGS.TAG_COORDINATES, coordinates);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
             Log.e("ServiceHandler", "Couldn't get any data from the url");
         }
-        return doctor;
+//        return doctor;
+        return clinic;
     }
     
     public Bitmap downloadBitmap(String url) {

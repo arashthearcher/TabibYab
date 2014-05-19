@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 
 import android.app.Activity;
@@ -17,12 +18,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.QuickContactBadge;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class DoctorInfActivity extends Activity {
 
-	HashMap<String, String> doctor;
+	Clinic doctor;
 	
 	private ProgressDialog pDialog;
 	private int doctor_id;
@@ -74,10 +77,23 @@ public class DoctorInfActivity extends Activity {
 	public void showDoctor()
 	{
 		TextView doc_name =(TextView) findViewById(R.id.doctor_name);
-		doc_name.setText(doctor.get(TAGS.TAG_NAME));
-		TextView text_id = new TextView(this);
-		text_id = (TextView) findViewById(R.id.doctor_id);
-		text_id.setText("شماره = " + Integer.toString(doctor_id)+"\nنوع="+doctor.get(TAGS.TAG_TYPE));
+		RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+		TextView doc_speciality =(TextView) findViewById(R.id.docSpeciality);
+		QuickContactBadge contact = (QuickContactBadge) findViewById(R.id.imgContact);
+		TextView phone =(TextView) findViewById(R.id.phone);
+		TextView days =(TextView) findViewById(R.id.days);
+		TextView waiting_times =(TextView) findViewById(R.id.waiting_time);
+		TextView address =(TextView) findViewById(R.id.address);
+		TextView operating_hours =(TextView) findViewById(R.id.operating_hour);
+		doc_name.setText(doctor.name);
+		ratingBar.setRating((float)doctor.rating);
+		doc_speciality.setText(doctor.speciality);
+		//contact.setImageBitmap("");
+		phone.setText((CharSequence) doctor.phoneNumbers);
+		days.setText(doctor.description);
+		waiting_times.setText(doctor.appointmentOnly);
+		address.setText(doctor.address);
+		operating_hours.setText((CharSequence) doctor.operatingHours);
 		Button cmnt_button = (Button) findViewById(R.id.cmntBtn);
 		cmnt_button.setOnClickListener(new OnClickListener() {
 			@Override
