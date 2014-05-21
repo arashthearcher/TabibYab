@@ -90,7 +90,7 @@ public class DoctorInfActivity extends Activity {
 		doc_speciality.setText(doctor.speciality);
 		//contact.setImageBitmap("");
 		phone.setText((CharSequence) doctor.phoneNumbers);
-		days.setText(doctor.description);
+		days.setText(doctor.appointmentOnly);
 		waiting_times.setText(doctor.appointmentOnly);
 		address.setText(doctor.address);
 		operating_hours.setText((CharSequence) doctor.operatingHours);

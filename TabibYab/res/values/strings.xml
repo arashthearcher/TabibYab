@@ -40,6 +40,31 @@
         <item>مطب</item>
         <item>کلینیک</item>
     </string-array>
+    
+    <string-array name="speciality_level_types">
+        <item>عمومی</item>
+        <item>متخصص</item>
+        <item>فوق تخصص</item>
+        <item>سایر</item>
+    </string-array>
+    
+    <string-array name="speciality_types">
+        <item>اعصاب و روان</item>
+        <item>رادیولوژی</item>
+        <item>زنان و زایمان</item>
+        <item> گوش حلق و بيني</item>
+        <item>جراحی عمومی</item>
+        <item>کودکان</item>
+        <item>گوارش</item>
+        <item>ریه</item>
+        <item> قلب و عروق</item>
+        <item> داخلی</item>
+        <item> چشم</item>
+        <item> پوست</item>
+        <item>ارتوپدي</item>
+        <item>دندانپزشکی</item>
+        <item>سایر</item>
+    </string-array>
      
     
      <string name="doctor_info">اطلاعات مرکز درمانی</string>
@@ -53,5 +78,7 @@
      <string name="comment_text">متن نظر</string>
     
      <string name="speciality">تخصص</string>
+    
+     <string name="clinic_phone">تلفن</string>
 
 </resources>

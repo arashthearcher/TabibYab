@@ -15,6 +15,7 @@ public class TAGS {
     public static final String TAG_COMMENT = "comment";
     public static final String TAG_RATING = "rating";
     public static final String TAG_SPECIALITY = "speciality";
+    public static final String TAG_SPECIALITY_LEVEL = "speciality_level";
     public static final String TAG_PROFILE_IMAGE = "profileImage";
     public static final String TAG_WAITING_TIME = "waiting_time";
     public static final String TAG_QUEUE_TIME = "queue_time";

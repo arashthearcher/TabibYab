@@ -5,16 +5,52 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical" >
-    <EditText
-        android:id="@+id/name_add_clinic"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/clinic_name" />
+
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/clinicType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/name_add_clinic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/clinic_name"
+        android:inputType="textPersonName">
+        <requestFocus />
+    </EditText>
+
+    <Spinner
+        android:id="@+id/levelSpecialityTypes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:textSize="24sp"/>
+
+    <Spinner
+        android:id="@+id/specialityTypes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/phone_add_clinic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/clinic_phone"
+        android:inputType="phone" >
+    </EditText>
+    
+    <EditText
+        android:id="@+id/addreess_add_clinic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/address"
+        android:inputType="textPostalAddress" />
+
     <Button
         android:id="@+id/add_point_on_map"
         android:layout_width="wrap_content"

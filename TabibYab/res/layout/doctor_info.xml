@@ -8,7 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_vertical"
-        android:background="@color/cyan" >
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg">
 
         <TextView
             android:id="@+id/doctor_name"
@@ -60,7 +63,9 @@
         android:layout_width="match_parent"
         android:layout_height="138dp"
         android:layout_marginTop="10dp"
-        android:background="@color/cyan"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg"
         android:paddingLeft="16dp"
         android:paddingRight="16dp" >
 
@@ -78,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/call"
             android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@+id/call" />
+            android:layout_toLeftOf="@+id/call"
+            android:text="@string/clinic_phone" />
 
         <TextView
             android:id="@+id/days"
@@ -86,7 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/address"
             android:layout_alignRight="@+id/waiting_time"
-            android:layout_alignTop="@+id/address" />
+            android:layout_alignTop="@+id/address"
+            android:text="days" />
 
         <ImageView
             android:id="@+id/waiting"
@@ -102,7 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/waiting"
             android:layout_marginRight="28dp"
-            android:layout_toLeftOf="@+id/waiting" />
+            android:layout_toLeftOf="@+id/waiting"
+            android:text="times" />
 
         <TextView
             android:id="@+id/address"
@@ -110,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/phone"
             android:layout_centerVertical="true"
-            android:text="ssa" />
+            android:text="@string/address" />
 
         <ImageView
             android:id="@+id/forward"

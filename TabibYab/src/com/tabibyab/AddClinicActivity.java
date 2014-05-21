@@ -32,37 +32,31 @@ public class AddClinicActivity extends Activity {
 	public static int LOCATION_REQUEST;
 	private Coordinate selectedLocation = null ;
 	private Spinner spinnerClinicType = null ;
+	private Spinner spinnerSpecialtyType = null ;
+	private Spinner spinnerSpecialityLevelType = null ;
 	private TextView nameTextView = null ;
+	private TextView phoneTextView = null ;
+	private TextView addressTextView = null ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_clinic);
-		
-		
-		
 		nameTextView = (TextView) findViewById(R.id.name_add_clinic);
-		spinnerClinicType = (Spinner) findViewById(R.id.spinner);
-		
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+		phoneTextView = (TextView) findViewById(R.id.phone_add_clinic);
+		addressTextView = (TextView) findViewById(R.id.addreess_add_clinic);
+		spinnerClinicType = (Spinner) findViewById(R.id.clinicType);
+		spinnerSpecialtyType = (Spinner) findViewById(R.id.specialityTypes);
+		spinnerSpecialityLevelType = (Spinner) findViewById(R.id.levelSpecialityTypes);
+		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
 				this, R.array.clinic_types, R.layout.dropdown_item);
-	
-		spinnerClinicType.setAdapter(adapter);
-		
-//		OnItemSelectedListener oisl = new OnItemSelectedListener() {
-//			
-//			public void onNothingSelected(AdapterView<?> parent) {
-//			}
-//
-//			@Override
-//			public void onItemSelected(AdapterView<?> parent, View view,
-//					int pos, long id) {
-//				
-//			}
-//		};
-//		spinner.setOnItemSelectedListener(oisl);
-		
+		spinnerClinicType.setAdapter(adapter1);
+		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
+				this, R.array.speciality_types, R.layout.dropdown_item);
+		spinnerSpecialtyType.setAdapter(adapter2);
+		ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(
+				this, R.array.speciality_level_types, R.layout.dropdown_item);
+		spinnerSpecialityLevelType.setAdapter(adapter3);
 		Button button = (Button) findViewById(R.id.add_point_on_map);
-		
 		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -148,7 +142,12 @@ public class AddClinicActivity extends Activity {
             ArrayList<DetailNameValuePair> params = new ArrayList<DetailNameValuePair>();
             
             params.add(new DetailNameValuePair(TAGS.TAG_NAME, nameTextView.getText().toString()));
+            params.add(new DetailNameValuePair(TAGS.TAG_PHONE_NUMBERS, phoneTextView.getText().toString()));
+            params.add(new DetailNameValuePair(TAGS.TAG_ADDRESS, addressTextView.getText().toString()));
             params.add(new DetailNameValuePair(TAGS.TAG_COORDINATES, selectedLocation.toString()));
+            params.add(new DetailNameValuePair(TAGS.TAG_TYPE, spinnerClinicType.getSelectedItem().toString()));
+            params.add(new DetailNameValuePair(TAGS.TAG_SPECIALITY, spinnerSpecialtyType.getSelectedItem().toString()));
+            params.add(new DetailNameValuePair(TAGS.TAG_SPECIALITY_LEVEL, spinnerSpecialityLevelType.getSelectedItem().toString()));
             
             sh.makeServiceCall(URLs.url_list_doctor, ServiceHandler.POST,(List) params);
             
@@ -165,9 +164,6 @@ public class AddClinicActivity extends Activity {
             if (pDialog.isShowing())
                 pDialog.dismiss();
             finish();
-            
-            
-            
             
         }
  
