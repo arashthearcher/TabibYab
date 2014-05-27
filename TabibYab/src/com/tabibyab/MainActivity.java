@@ -397,7 +397,7 @@ public class MainActivity extends Activity implements
 					{
 						  List<Address> list;
 						try {
-							list = gc.getFromLocationName(vicinityAddressSearch, 1,35.34, 35.9, 51, 51.70);
+							list = gc.getFromLocationName(vicinityAddressSearch, 1,35.34, 51, 35.9, 51.70);
 		
 						if(list != null && list.size() != 0)
 						{
