@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <string name="current_location">محل فعلی من</string>
     <string name="find">بگرد</string>
     <string name="all">همه</string>
     <string name="vicinity_of">حوالی</string>
-    <string name="less_than_1km">1 km</string>
-    <string name="less_than_2km">2 km</string>
-    <string name="less_than_3km">3 km</string>
-    <string name="less_than_4km">4 km</string>
+    <string name="less_than_2.5km">2.5 km</string>
+    <string name="less_than_5km">5 km</string>
+    <string name="less_than_10km">10 km</string>
+    <string name="less_than_20km">20 km</string>
     <string name="distance_from_me">فاصله</string>
 	<string name="Score">امتیاز</string>
 	<string name="show_on_map">مشاهده برروی نقشه</string>
 	<string name="show_as_list">مشاهده به صورت لیست</string>
+	<string name="action_refresh">دریافت دوباره</string>
     <string name="action_search">جست و جو</string>
     <string name="search_hint">جست و جوی دکتر</string>
     <string name="dialog_location_not_found">برنامه قادر به تعیین مشخصات جغرافیایی نیست، لطفا در تنظیمات مشخصات جغرافیایی را فعال کنید </string>
+    <string name="dialog_location_not_found_geocoding">مکان مورد نظر شما پیدا نشد </string>
     <string name="lat_tehran">35.6980799999999974</string>
     <string name="lng_tehran">51.4050659999999979</string>
     <string name="ok">تایید</string>
@@ -66,6 +68,33 @@
         <item>سایر</item>
     </string-array>
      
+    <string-array name="speciality_level_types_search">
+        <item>همه</item>
+        <item>عمومی</item>
+        <item>متخصص</item>
+        <item>فوق تخصص</item>
+        <item>سایر</item>
+    </string-array>
+    
+    <string-array name="speciality_types_search">
+        <item>همه</item>
+        <item>اعصاب و روان</item>
+        <item>رادیولوژی</item>
+        <item>زنان و زایمان</item>
+        <item> گوش حلق و بيني</item>
+        <item>جراحی عمومی</item>
+        <item>کودکان</item>
+        <item>گوارش</item>
+        <item>ریه</item>
+        <item> قلب و عروق</item>
+        <item> داخلی</item>
+        <item> چشم</item>
+        <item> پوست</item>
+        <item>ارتوپدي</item>
+        <item>دندانپزشکی</item>
+        <item>سایر</item>
+    </string-array>
+    
     
      <string name="doctor_info">اطلاعات مرکز درمانی</string>
      <string name="clinic_list">لیست مراکز درمانی</string>

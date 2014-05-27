@@ -32,5 +32,9 @@ public class TAGS {
     public static final String TAG_FROM_TIME = "fromTime";
     public static final String TAG_TO_TIME = "toTime";
     
+    public static final String TAG_LATITUDE = "lat";
+    public static final String TAG_LONGITUDE = "lng";
+    
+    public static final String TAG_DISTANCE = "dist";
     
 }
