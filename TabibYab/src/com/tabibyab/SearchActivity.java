@@ -117,6 +117,7 @@ public class SearchActivity extends Activity {
 			names[i] = clinicList.get(i).getName();
 		}
 		searchListView.setAdapter(new ClinicArrayAdapter(SearchActivity.this, clinicList, names, new ArrayList<Bitmap>()));
+		
 	}
 	
 	private class GetClinics extends AsyncTask<Void, Void, Void> {
