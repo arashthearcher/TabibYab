@@ -21,6 +21,7 @@ public class Clinic {
 	Coordinate coordinates;
 	String type;
 	String appointmentOnly;
+	String specialityLevel;
 	String speciality;
 	String websiteAddress;
 	String address;
@@ -43,6 +44,7 @@ public class Clinic {
 		    this.coordinates = new Coordinate(jo.getString(TAGS.TAG_COORDINATES));
 		    this.type = jo.getString(TAGS.TAG_TYPE);
 		    this.rating = jo.getDouble(TAGS.TAG_RATING);
+		    this.specialityLevel = jo.getString(TAGS.TAG_SPECIALITY_LEVEL);
 		    this.speciality = jo.getString(TAGS.TAG_SPECIALITY);
 		    this.address = jo.getString(TAGS.TAG_ADDRESS);
 		    this.profilePicAddress = jo.getString(TAGS.TAG_PROFILE_IMAGE);

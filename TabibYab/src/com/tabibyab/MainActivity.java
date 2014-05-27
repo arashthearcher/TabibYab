@@ -1,6 +1,8 @@
 package com.tabibyab;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +24,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,16 +53,17 @@ public class MainActivity extends Activity implements
 	private SearchFilterDialog searchFilterDialog;
 	private ProgressDialog pDialog;
 
-	private double searchDistant;
+	private double searchDistant = 10;
 	
 	
 	private GoogleMap gMap;
-	String query = null ;
+	ArrayList<NameValuePair> queryList = new ArrayList<NameValuePair>();
 	// Hashmap for ListView
 	ArrayList<Clinic> clinicList;
 	HashMap<Marker, Clinic> markerClinicMap;
-
-
+	
+	private String vicinityAddressSearch;
+	private Coordinate vicinityAddressCoordinate;
 
 	// Define an object that holds accuracy and frequency parameters
 	private final String TAG = "LocationGetLocationActivity";
@@ -68,7 +73,7 @@ public class MainActivity extends Activity implements
 
 	
 	private boolean useExistingClinicList = false;
-	
+	private boolean useCurrentLocation = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,6 +95,8 @@ public class MainActivity extends Activity implements
 		Intent intent = getIntent();
 		useExistingClinicList = intent.getBooleanExtra("useExistingClinicList", false) ;
 		
+		queryList.add(new DetailNameValuePair(TAGS.TAG_DISTANCE, Double.toString(searchDistant)));
+		
 		if(useExistingClinicList)
 		{
 			clinicList = ((MyApplication) getApplicationContext()).getClinicList();
@@ -97,7 +104,6 @@ public class MainActivity extends Activity implements
 			this.showClinicsOnMap(clinicList);
 		}
 		
-
 
 	}
 	
@@ -144,14 +150,24 @@ public class MainActivity extends Activity implements
 			searchFilterDialog.show(getFragmentManager(), "Filter Search Result");
 			
 			return true;
+		case R.id.action_refresh_map:
+			refreshMap();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // User touched the dialog's positive button
+    	
+    	queryList = searchFilterDialog.makeQuery();
+    	searchDistant = searchFilterDialog.getSelectedDistance();
+    	useCurrentLocation = searchFilterDialog.useCurrentLocation();
+    	vicinityAddressSearch = searchFilterDialog.getVicinityAddress();
+    	updateClinicList();
     }
 
     @Override
@@ -168,15 +184,23 @@ public class MainActivity extends Activity implements
 	    setIntent(intent);
 	    clinicList.clear();
 	    markerClinicMap.clear();
-	    gMap.clear();
 	    handleIntent(intent);
 	}
 	
 	private void handleIntent(Intent intent) {
 	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	    	if(intent.hasExtra(SearchManager.QUERY))
-	    		query = intent.getStringExtra(SearchManager.QUERY);
+	    	{
+	    		String query = intent.getStringExtra(SearchManager.QUERY);
+	    		if(query != null && !query.equals(""))
+				{
+					queryList.add(new DetailNameValuePair(TAGS.TAG_NAME, query));
+					queryList.add(new DetailNameValuePair(TAGS.TAG_DISTANCE, Double.toString(searchDistant)));
+				}
+	    	}
+	    		
 	    }
+	    
 	    new GetClinics().execute();
 	}
 	
@@ -237,28 +261,62 @@ public class MainActivity extends Activity implements
 		return (ConnectionResult.SUCCESS == resultCode);
 
 	}
+	
+	
+	
 
 	private void updateClinicList() {
 
 		// Calling async task to get json
 		new GetClinics().execute();
-
-		if (circle != null) {
-			circle.setVisible(false);
-			circle.remove();
-
-		}
-		circle = gMap.addCircle(new CircleOptions()
+	}
+	
+	private void addCircle()
+	{
+		if(searchDistant > 0)
+		{
+			Location location;
+			if(useCurrentLocation)
+			{
+				circle = gMap.addCircle(new CircleOptions()
 				.center(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation
-						.getLongitude())).radius(10000).strokeWidth(3)
-				.strokeColor(Color.BLUE));
-
+						.getLongitude())).radius(searchDistant*1000).strokeWidth(3)
+						.strokeColor(Color.BLUE));
+			}
+			else
+			{
+//				Marker marker = gMap.addMarker(new MarkerOptions().position(
+//						new LatLng(vicinityAddressCoordinate.getLat(), vicinityAddressCoordinate.getLng())).title(
+//						vicinityAddressSearch));
+				circle = gMap.addCircle(new CircleOptions()
+				.center(new LatLng(vicinityAddressCoordinate.getLat(), vicinityAddressCoordinate.getLng())).radius(searchDistant*1000).strokeWidth(3)
+						.strokeColor(Color.BLUE));
+			}
+		}
+	}
+	private void refreshMap()
+	{
+		
+		searchDistant = 10 ;
+	    queryList.clear();
+	    queryList.add(new DetailNameValuePair(TAGS.TAG_DISTANCE,Double.toString(searchDistant)));
+	    useExistingClinicList = false;
+	    useCurrentLocation = true;
+	    updateClinicList();
+	}
+	
+	private void removeExistingMarkers()
+	{
+		markerClinicMap.clear();
+	    gMap.clear();
 	}
 
 	public void showClinicsOnMap(final ArrayList<Clinic> clinicList) {
 		if (gMap != null) {
 
-
+			removeExistingMarkers();
+			addCircle();
+			
 			for (int i = 0; i < clinicList.size(); i++) {
 
 				Clinic clinic = clinicList.get(i);
@@ -303,8 +361,18 @@ public class MainActivity extends Activity implements
 		}
 	}
 
-	private class GetClinics extends AsyncTask<Void, Void, Void> {
+	
+	private void addLocationtoQueryList(double lat, double lng) {
+		queryList.add(new DetailNameValuePair(TAGS.TAG_LATITUDE,Double.toString(lat)));
+		  queryList.add(new DetailNameValuePair(TAGS.TAG_LONGITUDE,Double.toString(lng)));
+	}
+	
+	private class GetClinics extends AsyncTask<Void, Void, Integer> {
 
+		
+		private Integer GEOCODING_FAILED = 1;
+		private Integer RETRIEVING_INFORMATION_FAILED = 2;
+		private Integer SUCCESS = 0;
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -317,37 +385,89 @@ public class MainActivity extends Activity implements
 		}
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
+		protected Integer doInBackground(Void... arg0) {
 
+			
+			
+			if (!useCurrentLocation)
+			{
+					Geocoder gc = new Geocoder(MainActivity.this);
+	
+					if(Geocoder.isPresent())
+					{
+						  List<Address> list;
+						try {
+							list = gc.getFromLocationName(vicinityAddressSearch, 1,35.34, 35.9, 51, 51.70);
+		
+						if(list != null && list.size() != 0)
+						{
+							  Address address = list.get(0);
+			
+							  double lat = address.getLatitude();
+							  double lng = address.getLongitude();
+							  Log.d("Address: ", "> " + lat +" , "+ lng );
+							  
+							  vicinityAddressCoordinate = new Coordinate(lng, lat);
+							  
+							  addLocationtoQueryList(lat, lng);
+							 
+						}
+						else
+						{
+							return GEOCODING_FAILED;
+							
+							
+						}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+			}
+			else
+			{
+				addLocationtoQueryList(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+				
+			}
+			
+			
+			
 			// Creating service handler class instance
 			
 						ServiceHandler sh = new ServiceHandler();
-						ArrayList<NameValuePair> queryList = null;
-						if(getIntent().hasExtra(SearchManager.QUERY) && query != null && !query.equals(""))
+
+						String jsonStr;
+						
+						
+						if(queryList != null && queryList.size()!= 0)
 						{
-							queryList = new ArrayList<NameValuePair>();
-							queryList.add(new DetailNameValuePair("name", query));
+							jsonStr = sh.makeServiceCall(URLs.url_list_doctor, ServiceHandler.GET, queryList);
 						}
-						// Making a request to url and getting response
-						String jsonStr = sh.makeServiceCall(
-								URLs.url_list_doctor,
-								ServiceHandler.GET,queryList);
+						else
+						{
+							jsonStr = sh.makeServiceCall(URLs.url_list_doctor,ServiceHandler.GET);
+						}
+							
 
 						Log.d("Response: ", "> " + jsonStr);
 
 						clinicList = sh.parseClinics(jsonStr,false);
 
-			return null;
+			return SUCCESS;
 		}
 
+
+
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
 			// Dismiss the progress dialog
 			if (pDialog.isShowing())
 				pDialog.dismiss();
-
-			MainActivity.this.showClinicsOnMap(clinicList);
+			if(result == GEOCODING_FAILED)
+				new GeoCodingLocationNotFoundAlertDialog().show(getFragmentManager(), "LocationNotFound");
+			else if(result == SUCCESS )
+				MainActivity.this.showClinicsOnMap(clinicList);
 
 		}
 

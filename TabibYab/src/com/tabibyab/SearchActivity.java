@@ -24,11 +24,10 @@ import android.graphics.Bitmap;
 
 public class SearchActivity extends Activity {
 
-	
+	ArrayList<NameValuePair> queryList = new ArrayList<NameValuePair>();
 	ListView searchListView ;
 	private ProgressDialog pDialog;
 	ArrayList<Clinic> clinicList;
-	String query = null ;
 	private boolean useExistingClinicList = false;
 	private Location mCurrentLocation;
 	@Override
@@ -82,6 +81,9 @@ public class SearchActivity extends Activity {
 			((MyApplication) getApplicationContext()).setClinicList(clinicList);
 			startActivity(clinicMapIntent);
 			return true;
+		case R.id.action_refresh_list:
+			refreshList();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -92,7 +94,8 @@ public class SearchActivity extends Activity {
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
-	    setIntent(intent);
+	    useExistingClinicList = false;
+		setIntent(intent);
 	    handleIntent(intent);
 	}
 
@@ -105,7 +108,13 @@ public class SearchActivity extends Activity {
 		}
 		else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	    	if(intent.hasExtra(SearchManager.QUERY))
-	    		query = intent.getStringExtra(SearchManager.QUERY);
+	    		{
+		    		String query = intent.getStringExtra(SearchManager.QUERY);
+		    		if(query != null && !query.equals(""))
+					{
+						queryList.add(new DetailNameValuePair("name", query));
+					}
+	    		}
 	    	new GetClinics().execute();
 	    }
 	}
@@ -117,6 +126,14 @@ public class SearchActivity extends Activity {
 			names[i] = clinicList.get(i).getName();
 		}
 		searchListView.setAdapter(new ClinicArrayAdapter(SearchActivity.this, clinicList, names, new ArrayList<Bitmap>()));
+	}
+	
+	private void refreshList()
+	{
+		useExistingClinicList = false;
+		queryList.clear();
+		new GetClinics().execute();
+		
 	}
 	
 	private class GetClinics extends AsyncTask<Void, Void, Void> {
@@ -138,16 +155,18 @@ public class SearchActivity extends Activity {
 			// Creating service handler class instance
 			
 			ServiceHandler sh = new ServiceHandler();
-			ArrayList<NameValuePair> queryList = null;
-			if(getIntent().hasExtra(SearchManager.QUERY) && !query.equals(""))
+
+			String jsonStr;
+			
+			if(queryList != null && queryList.size()!= 0)
 			{
-				queryList = new ArrayList<NameValuePair>();
-				queryList.add(new DetailNameValuePair("name", query));
+				jsonStr = sh.makeServiceCall(URLs.url_list_doctor, ServiceHandler.GET, queryList);
 			}
-			// Making a request to url and getting response
-			String jsonStr = sh.makeServiceCall(
-					URLs.url_list_doctor,
-					ServiceHandler.GET,queryList);
+			else
+			{
+				jsonStr = sh.makeServiceCall(URLs.url_list_doctor,ServiceHandler.GET);
+			}
+				
 
 			Log.d("Response: ", "> " + jsonStr);
 
