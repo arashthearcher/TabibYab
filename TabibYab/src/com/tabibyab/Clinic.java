@@ -6,7 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.string;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.Pair;
 
 import com.google.android.gms.maps.model.Marker;
@@ -16,7 +18,7 @@ public class Clinic {
 	
 	int id;
 	String name;
-	double rating;
+	String rating ;
 	Marker marker = null;
 	Coordinate coordinates;
 	String type;
@@ -28,8 +30,8 @@ public class Clinic {
 	String description;
 	Bitmap profilePic;
 	String profilePicAddress;
-	ArrayList<PhoneNumber> phoneNumbers;
-	ArrayList<OperatingHour> operatingHours;
+	ArrayList<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+	ArrayList<OperatingHour> operatingHours = new ArrayList<OperatingHour>();
 	ArrayList<String> pictureURLs;
 	ArrayList<Bitmap> pictures;
 	ArrayList<String> insurances;
@@ -43,8 +45,8 @@ public class Clinic {
 		    this.name = jo.getString(TAGS.TAG_NAME);
 		    this.coordinates = new Coordinate(jo.getString(TAGS.TAG_COORDINATES));
 		    this.type = jo.getString(TAGS.TAG_TYPE);
-		    this.rating = jo.getDouble(TAGS.TAG_RATING);
-		    this.specialityLevel = jo.getString(TAGS.TAG_SPECIALITY_LEVEL);
+		    this.rating = jo.getString(TAGS.TAG_RATING);
+		    //this.specialityLevel = jo.getString(TAGS.TAG_SPECIALITY_LEVEL);
 		    this.speciality = jo.getString(TAGS.TAG_SPECIALITY);
 		    this.address = jo.getString(TAGS.TAG_ADDRESS);
 		    this.profilePicAddress = jo.getString(TAGS.TAG_PROFILE_IMAGE);
@@ -142,12 +144,14 @@ public class Clinic {
 	}
 
 
-	public double getRating() {
+	public String getRating() {
+		if(rating.equals("null"))
+			return "0";
 		return rating;
 	}
 
 
-	public void setRating(double rating) {
+	public void setRating(String rating) {
 		this.rating = rating;
 	}
 

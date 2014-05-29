@@ -340,7 +340,7 @@ public class MainActivity extends Activity implements
 	                TextView tvName = (TextView) v.findViewById(R.id.tv_name);
 	                TextView tvType = (TextView) v.findViewById(R.id.tv_type);
 	                RatingBar rating = (RatingBar)v.findViewById(R.id.rating);
-	                rating.setRating( (float) clinic.getRating());
+	                rating.setRating(Float.parseFloat(clinic.getRating()));
 	                tvName.setText( clinic.getName());
 	                tvType.setText( clinic.getType());
 	                return v;

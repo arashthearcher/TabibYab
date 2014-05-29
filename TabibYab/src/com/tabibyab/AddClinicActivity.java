@@ -181,7 +181,8 @@ public class AddClinicActivity extends Activity {
             Clinic doctor_new = sh.parseDoctorInfo(response);
             ArrayList<DetailNameValuePair> phone_params = new ArrayList<DetailNameValuePair>();
             phone_params.add(new DetailNameValuePair(TAGS.TAG_TEL, phoneTextView.getText().toString()));
-            phone_params.add(new DetailNameValuePair(TAGS.TAG_ID, Integer.toString(doctor_new.id)));
+            phone_params.add(new DetailNameValuePair(TAGS.TAG_CLINIC, Integer.toString(doctor_new.id)));
+            phone_params.add(new DetailNameValuePair(TAGS.TAG_TITLE, "phone"));
             sh.makeServiceCall(URLs.url_doctor_phonenumber, ServiceHandler.POST,(List) phone_params);
             
             

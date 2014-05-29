@@ -86,14 +86,22 @@ public class DoctorInfActivity extends Activity {
 		TextView address =(TextView) findViewById(R.id.address);
 		TextView operating_hours =(TextView) findViewById(R.id.operating_hour);
 		doc_name.setText(doctor.name);
-		ratingBar.setRating((float)doctor.rating);
+		ratingBar.setRating(Float.parseFloat(doctor.getRating()));
 		doc_speciality.setText(doctor.speciality);
 		//contact.setImageBitmap("");
-		phone.setText((CharSequence) doctor.phoneNumbers);
+		String phones="";
+		for (int i = 0; i < doctor.phoneNumbers.size(); i++) {
+			phones += doctor.phoneNumbers.get(i).tel+" ";
+		}
+		phone.setText(phones);
 		days.setText(doctor.appointmentOnly);
 		waiting_times.setText(doctor.appointmentOnly);
 		address.setText(doctor.address);
-		operating_hours.setText((CharSequence) doctor.operatingHours);
+		String hours="";
+		for (int i = 0; i < doctor.operatingHours.size(); i++) {
+			hours += doctor.operatingHours.get(i).from+"-"+doctor.operatingHours.get(i).to;
+		}
+		operating_hours.setText(hours);
 		Button cmnt_button = (Button) findViewById(R.id.cmntBtn);
 		cmnt_button.setOnClickListener(new OnClickListener() {
 			@Override
