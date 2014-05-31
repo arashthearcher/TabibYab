@@ -109,5 +109,7 @@
      <string name="speciality">تخصص</string>
     
      <string name="clinic_phone">تلفن</string>
+    
+     <string name="add_profile">انتخاب تصویر پروفایل</string>
 
 </resources>

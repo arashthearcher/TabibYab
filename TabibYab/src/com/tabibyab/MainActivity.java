@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -40,6 +41,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -340,6 +342,8 @@ public class MainActivity extends Activity implements
 	                TextView tvName = (TextView) v.findViewById(R.id.tv_name);
 	                TextView tvType = (TextView) v.findViewById(R.id.tv_type);
 	                RatingBar rating = (RatingBar)v.findViewById(R.id.rating);
+	                ImageView profilePic = (ImageView) v.findViewById(R.id.profile);
+	                profilePic.setImageBitmap(clinic.getProfilePic());
 	                rating.setRating(Float.parseFloat(clinic.getRating()));
 	                tvName.setText( clinic.getName());
 	                tvType.setText( clinic.getType());

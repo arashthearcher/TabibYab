@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.R.string;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.Pair;
 
@@ -28,7 +29,7 @@ public class Clinic {
 	String websiteAddress;
 	String address;
 	String description;
-	Bitmap profilePic;
+	Bitmap profilePic ;
 	String profilePicAddress;
 	ArrayList<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 	ArrayList<OperatingHour> operatingHours = new ArrayList<OperatingHour>();

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,7 +89,7 @@ public class DoctorInfActivity extends Activity {
 		doc_name.setText(doctor.name);
 		ratingBar.setRating(Float.parseFloat(doctor.getRating()));
 		doc_speciality.setText(doctor.speciality);
-		//contact.setImageBitmap("");
+		contact.setImageBitmap(doctor.profilePic);
 		String phones="";
 		for (int i = 0; i < doctor.phoneNumbers.size(); i++) {
 			phones += doctor.phoneNumbers.get(i).tel+" ";
