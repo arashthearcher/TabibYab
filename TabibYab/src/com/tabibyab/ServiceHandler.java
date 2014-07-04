@@ -52,7 +52,11 @@ public class ServiceHandler {
                 // looping through All Contacts
                 for (int i = 0; i < clinics.length(); i++) {
                     JSONObject c = clinics.getJSONObject(i);
-                    clinicList.add(new Clinic(c,detail));
+                    Clinic cli = new Clinic(c,detail);
+                    if(cli.profilePicAddress.length()!=0){
+                    	cli.profilePic = downloadBitmap(URLs.url_doctor_media+cli.profilePicAddress);
+                    }
+                    clinicList.add(cli);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -177,9 +181,7 @@ public class ServiceHandler {
                 	form.setContentEncoding(HTTP.UTF_8);
                     httpPost.setEntity(form);
                 }
- 
                 httpResponse = httpClient.execute(httpPost);
- 
             } else if (method == GET) {
                 // appending params to url
                 if (params != null) {
@@ -216,6 +218,7 @@ public class ServiceHandler {
             try {
                 	JSONObject c = new JSONObject(jsonStr);
                 	clinic = new Clinic(c, true);
+                	clinic.profilePic = downloadBitmap(URLs.url_doctor_media+clinic.profilePicAddress);
 //                    String id = c.getString(TAGS.TAG_ID);
 //                    String name = c.getString(TAGS.TAG_NAME);
 //                    String coordinates = c.getString(TAGS.TAG_COORDINATES);

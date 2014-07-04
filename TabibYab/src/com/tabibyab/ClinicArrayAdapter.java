@@ -34,7 +34,7 @@ public class ClinicArrayAdapter extends ArrayAdapter<String> {
     RatingBar rating = (RatingBar)rowView.findViewById(R.id.doctor_list_view_rating);
     Clinic clinic = clinicList.get(position);
     
-    rating.setRating( (float) clinic.getRating());
+    rating.setRating(Float.parseFloat(clinic.getRating()));
 //    rating.setEnabled(false);
 //    rating.setActivated(false);
     doctorNameTV.setText(clinic.getName());

@@ -78,32 +78,6 @@
             android:src="@drawable/ic_action_call" />
 
         <TextView
-            android:id="@+id/phone"
-            android:layout_width="96dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/call"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@+id/call"
-            android:text="@string/clinic_phone" />
-
-        <TextView
-            android:id="@+id/days"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/address"
-            android:layout_alignRight="@+id/waiting_time"
-            android:layout_alignTop="@+id/address"
-            android:text="days" />
-
-        <ImageView
-            android:id="@+id/waiting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/phone"
-            android:src="@drawable/waiting_room" />
-
-        <TextView
             android:id="@+id/waiting_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -111,14 +85,6 @@
             android:layout_marginRight="28dp"
             android:layout_toLeftOf="@+id/waiting"
             android:text="times" />
-
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/phone"
-            android:layout_centerVertical="true"
-            android:text="@string/address" />
 
         <ImageView
             android:id="@+id/forward"
@@ -128,20 +94,57 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_action_forward" />
 
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/call"
+            android:layout_alignTop="@+id/waiting_time"
+            android:layout_toLeftOf="@+id/call"
+            android:text="@string/clinic_phone" />
+
+        <ImageView
+            android:id="@+id/waiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/phone"
+            android:src="@drawable/waiting_room" />
+
         <ImageView
             android:id="@+id/clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/forward"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/phone"
             android:src="@drawable/ic_action_time" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/waiting"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/forward"
+            android:text="@string/address" />
 
         <TextView
             android:id="@+id/operating_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/clock"
-            android:layout_toLeftOf="@+id/clock" />
+            android:layout_alignLeft="@+id/address"
+            android:layout_alignRight="@+id/phone"
+            android:layout_alignTop="@+id/clock" />
+
+        <TextView
+            android:id="@+id/days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/operating_hour"
+            android:layout_alignBottom="@+id/operating_hour"
+            android:layout_alignRight="@+id/waiting_time"
+            android:text="days" />
 
     </RelativeLayout>
 
