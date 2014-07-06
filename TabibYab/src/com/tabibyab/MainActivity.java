@@ -12,6 +12,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -56,7 +58,7 @@ public class MainActivity extends Activity implements
 	private ProgressDialog pDialog;
 
 	private double searchDistant = 10;
-	
+	private boolean drawCircle = true;
 	
 	private GoogleMap gMap;
 	ArrayList<NameValuePair> queryList = new ArrayList<NameValuePair>();
@@ -97,14 +99,16 @@ public class MainActivity extends Activity implements
 		Intent intent = getIntent();
 		useExistingClinicList = intent.getBooleanExtra("useExistingClinicList", false) ;
 		
-		queryList.add(new DetailNameValuePair(TAGS.TAG_DISTANCE, Double.toString(searchDistant)));
 		
 		if(useExistingClinicList)
 		{
 			clinicList = ((MyApplication) getApplicationContext()).getClinicList();
 			mCurrentLocation = ((MyApplication) getApplicationContext()).getCurrentLocation();
-			this.showClinicsOnMap(clinicList);
+			drawCircle = false;
+			showClinicsOnMap(clinicList);
 		}
+		else
+			queryList.add(new DetailNameValuePair(TAGS.TAG_DISTANCE, Double.toString(searchDistant)));
 		
 
 	}
@@ -169,6 +173,7 @@ public class MainActivity extends Activity implements
     	searchDistant = searchFilterDialog.getSelectedDistance();
     	useCurrentLocation = searchFilterDialog.useCurrentLocation();
     	vicinityAddressSearch = searchFilterDialog.getVicinityAddress();
+    	drawCircle = true;
     	updateClinicList();
     }
 
@@ -197,12 +202,11 @@ public class MainActivity extends Activity implements
 	    		if(query != null && !query.equals(""))
 				{
 					queryList.add(new DetailNameValuePair(TAGS.TAG_NAME, query));
-					queryList.add(new DetailNameValuePair(TAGS.TAG_DISTANCE, Double.toString(searchDistant)));
+					drawCircle = false;
 				}
 	    	}
 	    		
 	    }
-	    
 	    new GetClinics().execute();
 	}
 	
@@ -233,6 +237,8 @@ public class MainActivity extends Activity implements
 			((MyApplication) getApplicationContext()).setCurrentLocation(mCurrentLocation);
 			if(!useExistingClinicList)
 				updateClinicList();
+			else
+				useExistingClinicList = false;
 		}
 		else
 		{
@@ -317,7 +323,9 @@ public class MainActivity extends Activity implements
 		if (gMap != null) {
 
 			removeExistingMarkers();
-			addCircle();
+			if(drawCircle)
+				addCircle();
+			
 			
 			for (int i = 0; i < clinicList.size(); i++) {
 
@@ -326,10 +334,22 @@ public class MainActivity extends Activity implements
 						new LatLng(clinic.getCoordinates().getLat(), clinic.getCoordinates().getLng())).title(
 						clinic.getName()));
 				markerClinicMap.put(marker, clinic);
-				if (mCurrentLocation != null)
-					gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-							new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 11));
+				
+				
 			}
+			
+			
+			
+			if (useExistingClinicList == false && mCurrentLocation != null)
+				gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+						new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 11));
+			else
+			{
+				gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+						new LatLng(35.74, 51.31), 11));
+			}
+			
+			
 			gMap.setInfoWindowAdapter(new InfoWindowAdapter() {
 	            @Override
 	            public View getInfoWindow(Marker arg0) {
@@ -363,6 +383,8 @@ public class MainActivity extends Activity implements
 
 
 		}
+		// clinics have shown on map, from now on , other queries should not use existing clinic list
+//		useExistingClinicList = false;
 	}
 
 	

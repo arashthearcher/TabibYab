@@ -40,7 +40,7 @@ public class SearchActivity extends Activity {
 	    
 	    Intent intent = getIntent();
 		useExistingClinicList = intent.getBooleanExtra("useExistingClinicList", false) ;
-	    handleIntent(intent);
+		handleIntent(intent);
 	}
 
 	@Override
@@ -106,17 +106,23 @@ public class SearchActivity extends Activity {
 			clinicList = ((MyApplication) getApplicationContext()).getClinicList();
 			setMyListAdapter();
 		}
-		else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-	    	if(intent.hasExtra(SearchManager.QUERY))
-	    		{
-		    		String query = intent.getStringExtra(SearchManager.QUERY);
-		    		if(query != null && !query.equals(""))
-					{
-						queryList.add(new DetailNameValuePair("name", query));
-					}
-	    		}
-	    	new GetClinics().execute();
-	    }
+		else
+		{
+			if(intent.hasExtra(TAGS.TAG_SPECIALITY))
+				queryList.add(new DetailNameValuePair(TAGS.TAG_SPECIALITY, intent.getStringExtra("speciality")));
+			
+			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+		    	if(intent.hasExtra(SearchManager.QUERY))
+		    		{
+			    		String query = intent.getStringExtra(SearchManager.QUERY);
+			    		if(query != null && !query.equals(""))
+						{
+							queryList.add(new DetailNameValuePair("name", query));
+						}
+		    		}
+		    }
+			new GetClinics().execute();
+		}
 	}
 	
 	public void setMyListAdapter()

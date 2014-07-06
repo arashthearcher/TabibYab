@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal" >
+
+    <ImageButton
+        android:id="@+id/show_map_icon_main_menu"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="66dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/map_icon" />
+
+    <ImageButton
+        android:id="@+id/show_list_main_menu"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_alignLeft="@+id/show_map_icon_main_menu"
+        android:layout_below="@+id/show_map_icon_main_menu"
+        android:layout_marginTop="84dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/list_icon" />
+
+    <TextView
+        android:id="@+id/show_map_caption_main_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/show_map_icon_main_menu"
+        android:layout_alignRight="@+id/show_map_icon_main_menu"
+        android:layout_below="@+id/show_map_icon_main_menu"
+        android:text="@string/show_on_map" />
+
+    <TextView
+        android:id="@+id/show_list_caption_main_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/show_list_main_menu"
+        android:layout_alignRight="@+id/show_list_main_menu"
+        android:layout_below="@+id/show_list_main_menu"
+        android:text="@string/show_as_list" />
+
+</RelativeLayout>

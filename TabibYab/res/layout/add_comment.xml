@@ -17,7 +17,6 @@
         <requestFocus />
     </EditText>
 
-
 <RatingBar
     android:id="@+id/ratingTotal"
     style="@style/appleRatingBar"
@@ -25,7 +24,8 @@
     android:layout_height="wrap_content"
     android:layout_alignBottom="@+id/add_main_comment"
     android:layout_alignLeft="@+id/comment_text"
-    android:layout_marginBottom="65dp" />
+    android:layout_marginBottom="65dp"
+    android:minHeight="32dp" />
 
 <Button
     android:id="@+id/add_main_comment"
