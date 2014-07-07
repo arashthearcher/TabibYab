@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    
+     <string name="favorites">علاقه‌مندی‌ها</string>
     <string name="current_location">محل فعلی من</string>
     <string name="find">بگرد</string>
     <string name="all">همه</string>

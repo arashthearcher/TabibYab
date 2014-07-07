@@ -11,7 +11,10 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.QuickContactBadge;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -27,9 +31,10 @@ import android.widget.TextView;
 public class DoctorInfActivity extends Activity {
 
 	Clinic doctor;
-	
+	private boolean isFaved = false;
 	private ProgressDialog pDialog;
 	private int doctor_id;
+	ImageButton favoriteButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,80 @@ public class DoctorInfActivity extends Activity {
 		Intent DoctorInfintent = getIntent();
 		doctor_id = DoctorInfintent.getIntExtra("doctor_id", 1);
 		setContentView(R.layout.doctor_info);
+		
+		favoriteButton = (ImageButton) findViewById(R.id.favorite_button);
+		
+		// Create a new DatabaseHelper
+		DatabaseOpenHelper mDbHelper = new DatabaseOpenHelper(DoctorInfActivity.this);
+
+		// Get the underlying database for writing
+		SQLiteDatabase mDB = mDbHelper.getWritableDatabase();
+		
+		Cursor c = mDB.query(mDbHelper.TABLE_NAME, new String[]{mDbHelper._ID}, mDbHelper._ID+"=?", new String[]{String.valueOf(doctor_id)}, null, null, null);
+		
+		if (c.getCount() > 0)
+		{
+			Log.d("DoctorInfActivity", "isfaved");
+			isFaved = true;
+			favoriteButton.setImageResource(R.drawable.favorites_icon);
+		}
+		
+		c.close();
+		mDB.close();
+		mDbHelper.close();
+		favoriteButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+			
+				if(isFaved)
+				{
+					// Create a new DatabaseHelper
+					DatabaseOpenHelper mDbHelper = new DatabaseOpenHelper(DoctorInfActivity.this);
+
+					// Get the underlying database for writing
+					SQLiteDatabase mDB = mDbHelper.getWritableDatabase();
+					
+					mDB.delete(DatabaseOpenHelper.TABLE_NAME,
+							DatabaseOpenHelper._ID + "=?",
+							new String[] { String.valueOf(doctor_id) });
+					mDB.close();
+					mDbHelper.close();
+					favoriteButton.setImageResource(R.drawable.favorites_icon_gray);
+				}
+				else
+				{
+					
+				
+					// Create a new DatabaseHelper
+					DatabaseOpenHelper mDbHelper = new DatabaseOpenHelper(DoctorInfActivity.this);
+	
+					// Get the underlying database for writing
+					SQLiteDatabase mDB = mDbHelper.getWritableDatabase();
+					
+					ContentValues values = new ContentValues();
+	
+					values.put(mDbHelper._ID, doctor_id);
+					values.put(TAGS.TAG_NAME, doctor.getName());
+					values.put(TAGS.TAG_LONGITUDE, doctor.getCoordinates().getLng());
+					values.put(TAGS.TAG_LATITUDE, doctor.getCoordinates().getLat());
+					values.put(TAGS.TAG_ADDRESS, doctor.address);
+					values.put(TAGS.TAG_TEL, doctor.getPhoneNumbersInString());
+					values.put(TAGS.TAG_OPERATING_HOURS, doctor.getOperatingHoursInString());
+					values.put(TAGS.TAG_RATING, doctor.getRating());
+					values.put(TAGS.TAG_INSURANCES, doctor.getInsurancesInString());
+					values.put(TAGS.TAG_SPECIALITY, doctor.getSpeciality());
+					values.put(TAGS.TAG_SPECIALITY_LEVEL, doctor.getSpecialityLevel());
+					values.put(TAGS.TAG_TYPE, doctor.getType());
+					values.put(TAGS.TAG_WEBSITE_ADDRESS, doctor.getWebsiteAddress());
+					values.put(TAGS.TAG_DESCRIPTION, doctor.getDescription());
+					mDB.insert(DatabaseOpenHelper.TABLE_NAME, null, values);
+					mDB.close();
+					mDbHelper.close();
+					favoriteButton.setImageResource(R.drawable.favorites_icon);
+				}
+			}
+		});
 	}
 
 	private class GetDoctor extends AsyncTask<Void, Void, Void> {

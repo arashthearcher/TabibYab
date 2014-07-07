@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 
 public class MainMenuActivity extends Activity {
 	
-	ImageButton viewMapButton, viewListButton;
+	ImageButton viewMapButton, viewListButton, viewFavoriteButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,17 @@ public class MainMenuActivity extends Activity {
 				startActivity(showList);
 			}
 		});
+		
+		viewFavoriteButton = (ImageButton) findViewById(R.id.favorite_button_main_menu);
+		viewFavoriteButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent showFavorite = new Intent(MainMenuActivity.this, FavoritesActivity.class);
+				startActivity(showFavorite);
+			}
+		});
+		
 		
 		
 		

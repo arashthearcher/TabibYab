@@ -37,4 +37,6 @@ public class TAGS {
     
     public static final String TAG_DISTANCE = "dist";
     
+    public static final String TAG_FAVORITE = "favorite";
+    
 }

@@ -16,7 +16,6 @@ import com.google.android.gms.maps.model.Marker;
 
 public class Clinic {
 
-	
 	int id;
 	String name;
 	String rating ;
@@ -119,6 +118,68 @@ public class Clinic {
 		
 	}
 	
+	
+	public Clinic(int id, String name, String address, String speciality) 
+	{
+		this.id = id ;
+		this.name = name;
+		this.address = address;
+		this.speciality = speciality;
+	}
+	
+	public String getSpecialityLevel() {
+		return specialityLevel;
+	}
+
+
+	public void setSpecialityLevel(String specialityLevel) {
+		this.specialityLevel = specialityLevel;
+	}
+
+
+	public String getPhoneNumbersInString()
+	{
+		String result = "";
+		if(this.phoneNumbers != null)
+		{
+			
+			for (PhoneNumber pn : phoneNumbers) {
+				result += pn.title + " : " + pn.tel + "\n" ;
+			}
+		}
+		return result;
+	}
+	
+	public String getInsurancesInString()
+	{
+		String result = "";
+		if(this.insurances != null)
+		{
+			
+			for (String ins : insurances) {
+				result += ins+ "\n" ;
+			}
+		}
+		return result;
+	}
+
+	public String getOperatingHoursInString()
+	{
+		String result = "";
+		if(this.operatingHours != null)
+		{
+			
+			for (OperatingHour oh : operatingHours) {
+				result += oh.from +" - "+ oh.to + "\n" ;
+			}
+		}
+		return result;
+	}
+
+		
+	
+	
+	
 	public void setMarker(Marker marker)
 	{
 		this.marker = marker;
@@ -146,7 +207,7 @@ public class Clinic {
 
 
 	public String getRating() {
-		if(rating.equals("null"))
+		if(rating == null || rating.equals("null"))
 			return "0";
 		return rating;
 	}

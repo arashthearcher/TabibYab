@@ -17,6 +17,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -36,7 +39,21 @@ public class SearchActivity extends Activity {
 	    setContentView(R.layout.search_list);
 	    searchListView = (ListView) findViewById(R.id.search_listview);
 
+	    
+	    searchListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent DoctorInfintent = new Intent(SearchActivity.this, DoctorInfActivity.class);
+				DoctorInfintent.putExtra("doctor_id", clinicList.get(position).getId());
+				startActivity(DoctorInfintent);
+			}
+		});
+	    
 	    mCurrentLocation = ((MyApplication) getApplicationContext()).getCurrentLocation();
+	    
+	    
 	    
 	    Intent intent = getIntent();
 		useExistingClinicList = intent.getBooleanExtra("useExistingClinicList", false) ;
