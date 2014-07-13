@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    
+    <string name="home">خانه</string>
      <string name="favorites">علاقه‌مندی‌ها</string>
     <string name="current_location">محل فعلی من</string>
     <string name="find">بگرد</string>
@@ -23,6 +23,7 @@
     <string name="lat_tehran">35.6980799999999974</string>
     <string name="lng_tehran">51.4050659999999979</string>
     <string name="ok">تایید</string>
+    <string name="filter">فیلتر</string>
     <string name="cancel">بی خیال</string>
     <string name="app_name">طبیب یاب</string>
     <string name="add_clinic_activity">افزودن مرکز درمانی</string>
@@ -34,6 +35,10 @@
     <string name="clinic_speciality">تخصص</string>
     <string name="address">آدرس</string>
     <string name="select_location">ثبت دقیق مکان برروی نقشه</string>
+    <string name="operating_hours">ساعات کاری</string>
+    <string name="from">از</string>
+    <string name="to">تا</string>
+    <string name="insurances">بیمه‌های تحت قرارداد</string>
     <string-array name="clinic_types">
         <item>بیمارستان</item>
         <item>مطب</item>
@@ -54,6 +59,7 @@
     </string-array>
     
     <string-array name="speciality_types">
+        <item>     </item>
         <item>اعصاب و روان</item>
         <item>رادیولوژی</item>
         <item>زنان و زایمان</item>

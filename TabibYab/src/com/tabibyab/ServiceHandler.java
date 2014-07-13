@@ -116,10 +116,10 @@ public class ServiceHandler {
         return clinicList;
     }
     
-    public ArrayList<String> parseCommentsList(String jsonStr)
+    public ArrayList<Comment> parseCommentsList(String jsonStr)
     {
 //    	ArrayList<HashMap<String, String>> commentsList = new ArrayList<HashMap<String, String>>();
-    	ArrayList<String> commentsList = new ArrayList<String>();
+    	ArrayList<Comment> commentsList = new ArrayList<Comment>();
         if (jsonStr != null) {
             try {
                 JSONObject jsonObj = new JSONObject(jsonStr);
@@ -130,15 +130,10 @@ public class ServiceHandler {
                     String id = c.getString(TAGS.TAG_ID);
                     String name = c.getString(TAGS.TAG_NAME);
                     String clinic = c.getString(TAGS.TAG_CLINIC);
+                    String rating = c.getString(TAGS.TAG_RATING);
                     String commentText = c.getString(TAGS.TAG_COMMENT);
                     
-//                    HashMap<String, String> commentMap = new HashMap<String, String>();
-//                    commentMap.put(TAGS.TAG_ID, id);
-//                    commentMap.put(TAGS.TAG_NAME, name);
-//                    commentMap.put(TAGS.TAG_CLINIC,clinic);
-//                    commentMap.put(TAGS.TAG_COMMENT, comment);
-                    String comment = name+": "+commentText;
-                    commentsList.add(comment);
+                    commentsList.add(new Comment(Integer.parseInt(id), name, commentText, rating));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

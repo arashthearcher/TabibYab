@@ -6,6 +6,7 @@ public class URLs {
 
 	
 	static String url_list_doctor = IP + "search/";
+	static String url_list_insurances = IP + "insurances";
 	static String url_doctor_info = IP + "doctor/";
 	static String url_doctor_comments = IP + "comments";
 	static String url_doctor_phonenumber = IP + "phonenumbers";

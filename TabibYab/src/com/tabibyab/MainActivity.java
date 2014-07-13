@@ -154,7 +154,10 @@ public class MainActivity extends Activity implements
 		case R.id.searchFilterButton:
 			searchFilterDialog = new SearchFilterDialog();
 			searchFilterDialog.show(getFragmentManager(), "Filter Search Result");
-			
+			return true;
+		case R.id.action_home:
+			Intent homeIntent = new Intent(MainActivity.this, MainMenuActivity.class);
+			startActivity(homeIntent);
 			return true;
 		case R.id.action_refresh_map:
 			refreshMap();

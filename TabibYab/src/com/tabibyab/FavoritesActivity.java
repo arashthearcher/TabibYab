@@ -38,8 +38,7 @@ public class FavoritesActivity extends Activity {
 	    c.moveToFirst();
 	    for (int i = 0; i < numberOfClinics; i++) 
 	    {
-	    	clinicList.add(new Clinic(c.getInt(c.getColumnIndexOrThrow(mDbHelper._ID)), 
-	    			c.getString(c.getColumnIndexOrThrow(TAGS.TAG_NAME)),c.getString(c.getColumnIndexOrThrow(TAGS.TAG_ADDRESS)), c.getString(c.getColumnIndexOrThrow(TAGS.TAG_SPECIALITY))));
+	    	clinicList.add(new Clinic(c));
 	    	c.moveToNext();
 		}
 	    c.close();

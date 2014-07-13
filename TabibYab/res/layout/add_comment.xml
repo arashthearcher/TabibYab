@@ -2,20 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/activity_border"
     android:minHeight="20dp"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
-
-    <EditText
-        android:id="@+id/commenter_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/commenter_name"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
 
 <RatingBar
     android:id="@+id/ratingTotal"
@@ -56,5 +47,15 @@
     android:hint="@string/comment_text"
     android:inputType="textMultiLine"
     android:minHeight="220dp" />
+
+<EditText
+    android:id="@+id/commenter_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="40dp"
+    android:ems="10"
+    android:hint="@string/commenter_name"
+    android:inputType="textPersonName" />
 
 </RelativeLayout>

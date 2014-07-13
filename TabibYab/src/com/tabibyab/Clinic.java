@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.R.string;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -63,6 +64,9 @@ public class Clinic {
 		    	JSONArray OHJSON = jo.getJSONArray(TAGS.TAG_OPERATING_HOURS);
 		    	parseOperatingHours(OHJSON);
 		    	
+		    	JSONArray insurancesJSON = jo.getJSONArray(TAGS.TAG_INSURANCES);
+		    	parseinsurances(insurancesJSON);
+		    	
 		    }
 		    
         } catch (JSONException e) {
@@ -98,6 +102,19 @@ public class Clinic {
 		}
 	}
 	
+	
+	public void parseinsurances(JSONArray insuranceJSON) throws JSONException
+	{
+		if (insuranceJSON.length()>0)
+		{
+			this.insurances = new ArrayList<String>();
+			for (int i = 0; i < insuranceJSON.length(); i++) {
+	            JSONObject insurance = insuranceJSON.getJSONObject(i);
+	            this.insurances.add(insurance.getString(TAGS.TAG_TITLE));
+	        }
+		}
+	}
+	
 	public Clinic(int id, String name, Coordinate coordinate, String type, String appointmentOnly) {
 		// TODO Auto-generated constructor stub
 		this.id = id ;
@@ -117,7 +134,21 @@ public class Clinic {
 		
 		
 	}
-	
+
+	public Clinic(Cursor c)
+	{
+		this.id = c.getInt(c.getColumnIndexOrThrow(DatabaseOpenHelper._ID));
+		this.name = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_NAME));
+		this.address = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_ADDRESS));
+		this.speciality = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_SPECIALITY));
+//		this.specialityLevel = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_SPECIALITY_LEVEL));
+//		this.coordinates = new Coordinate(c.getDouble(c.getColumnIndexOrThrow(TAGS.TAG_LONGITUDE)), c.getDouble(c.getColumnIndexOrThrow(TAGS.TAG_LATITUDE)));
+		this.rating = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_RATING));
+//		this.type = this.speciality = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_TYPE));
+//		this.websiteAddress = this.speciality = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_WEBSITE_ADDRESS));
+//		this.description = this.speciality = c.getString(c.getColumnIndexOrThrow(TAGS.TAG_DESCRIPTION));
+		
+	}
 	
 	public Clinic(int id, String name, String address, String speciality) 
 	{

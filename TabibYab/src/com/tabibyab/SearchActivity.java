@@ -101,6 +101,10 @@ public class SearchActivity extends Activity {
 		case R.id.action_refresh_list:
 			refreshList();
 			return true;
+		case R.id.action_home_list_view:
+			Intent homeIntent = new Intent(SearchActivity.this, MainMenuActivity.class);
+			startActivity(homeIntent);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

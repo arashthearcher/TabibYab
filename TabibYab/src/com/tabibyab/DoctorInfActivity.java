@@ -11,7 +11,10 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,12 +22,15 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.QuickContactBadge;
 import android.widget.RatingBar;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -65,6 +71,7 @@ public class DoctorInfActivity extends Activity {
 		c.close();
 		mDB.close();
 		mDbHelper.close();
+		
 		favoriteButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -120,6 +127,44 @@ public class DoctorInfActivity extends Activity {
 		});
 	}
 
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.doctor_detail_activity_menu, menu);
+	    return true;
+
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.addClinicButton:
+			Intent addClinicIntent = new Intent(DoctorInfActivity.this,
+					AddClinicActivity.class);
+			startActivity(addClinicIntent);
+			return true;
+		case R.id.clinicMapView:
+			Intent clinicMapIntent = new Intent(DoctorInfActivity.this,
+					MainActivity.class);
+			clinicMapIntent.putExtra("useExistingClinicList", true);
+			ArrayList<Clinic> clinicList = new ArrayList<Clinic>();
+			clinicList.add(doctor);
+			((MyApplication) getApplicationContext()).setClinicList(clinicList);
+			startActivity(clinicMapIntent);
+			return true;
+		case R.id.action_home_list_view:
+			Intent homeIntent = new Intent(DoctorInfActivity.this, MainMenuActivity.class);
+			startActivity(homeIntent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	
+	
 	private class GetDoctor extends AsyncTask<Void, Void, Void> {
 
 		@Override
@@ -169,19 +214,30 @@ public class DoctorInfActivity extends Activity {
 		ratingBar.setRating(Float.parseFloat(doctor.getRating()));
 		doc_speciality.setText(doctor.speciality);
 		contact.setImageBitmap(doctor.profilePic);
+		
+		
 		String phones="";
 		for (int i = 0; i < doctor.phoneNumbers.size(); i++) {
-			phones += doctor.phoneNumbers.get(i).tel+" ";
+			phones += doctor.phoneNumbers.get(i).tel+"\n";
 		}
 		phone.setText(phones);
+		
+		
 		days.setText(doctor.appointmentOnly);
+		
 		waiting_times.setText(doctor.appointmentOnly);
+		
 		address.setText(doctor.address);
+		
 		String hours="";
 		for (int i = 0; i < doctor.operatingHours.size(); i++) {
-			hours += doctor.operatingHours.get(i).from+"-"+doctor.operatingHours.get(i).to;
+			hours += doctor.operatingHours.get(i).from+"-"+doctor.operatingHours.get(i).to+"\n";
 		}
 		operating_hours.setText(hours);
+		
+		TextView insurances = (TextView) findViewById(R.id.insurances_doctor_detail);
+		insurances.setText(doctor.getInsurancesInString());
+		
 		Button cmnt_button = (Button) findViewById(R.id.cmntBtn);
 		cmnt_button.setOnClickListener(new OnClickListener() {
 			@Override

@@ -1,96 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
+<LinearLayout
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical" >
+    android:paddingRight="16dp" >
 
-    <Button
-        android:id="@+id/add_point_on_map"
-        android:layout_width="217dp"
+    <TextView
+        android:id="@+id/add_clinic_caption_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="18dp"
-        android:text="@string/select_location" />
+        android:layout_gravity="right"
+        android:text="@string/clinic_name" />
 
     <EditText
-        android:id="@+id/addreess_add_clinic"
+        android:id="@+id/name_add_clinic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/add_point_on_map"
-        android:layout_alignLeft="@+id/quickContactBadge1"
-        android:layout_marginBottom="58dp"
         android:ems="10"
-        android:hint="@string/address"
-        android:inputType="textPostalAddress" />
+        android:layout_gravity="right"
+        android:hint="@string/clinic_name"
+        android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/phone_add_clinic"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/add_point_on_map"
-        android:layout_alignLeft="@+id/addreess_add_clinic"
-        android:layout_marginBottom="14dp"
-        android:ems="10"
-        android:hint="@string/clinic_phone"
-        android:inputType="phone" />
+        android:layout_gravity="right" >
 
-    <Spinner
-        android:id="@+id/specialityTypes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/addreess_add_clinic"
-        android:layout_alignLeft="@+id/addreess_add_clinic"
-        android:textSize="24sp" />
+        <QuickContactBadge
+            android:id="@+id/image_Contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:adjustViewBounds="true"
+            android:maxHeight="70dp"
+            android:maxWidth="70dp"
+            android:scaleType="fitCenter" />
 
-    <Spinner
-        android:id="@+id/levelSpecialityTypes"
-        android:layout_width="match_parent"
+        <Button
+            android:id="@+id/add_profile_picture"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:minHeight="64dip"
+            android:layout_gravity="right"
+            android:text="@string/add_profile" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/add_clinic_caption_clinic_type"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/specialityTypes"
-        android:layout_alignLeft="@+id/specialityTypes"
-        android:textSize="24sp" />
+        android:layout_gravity="right"
+        android:text="@string/clinic_type" />
 
     <Spinner
         android:id="@+id/clinicType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/levelSpecialityTypes"
-        android:layout_alignLeft="@+id/levelSpecialityTypes"
         android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/add_profile_picture"
-        android:layout_width="217dp"
-        android:layout_height="35dp"
-        android:layout_above="@+id/clinicType"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/name_add_clinic"
-        android:text="@string/add_profile" />
-
-    <EditText
-        android:id="@+id/name_add_clinic"
-        android:layout_width="133dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/add_profile_picture"
-        android:ems="10"
-        android:hint="@string/clinic_name"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
-
-    <QuickContactBadge
-        android:id="@+id/image_Contact"
+    <TextView
+        android:id="@+id/add_clinic_caption_speciality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/clinicType"
-        android:layout_alignTop="@+id/add_profile_picture"
-        android:adjustViewBounds="true"
-        android:maxHeight="70dp"
-        android:maxWidth="70dp" />
-    
-</RelativeLayout>
+        android:layout_gravity="right"
+        android:text="@string/speciality" />
+
+    <Spinner
+        android:id="@+id/levelSpecialityTypes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <Spinner
+        android:id="@+id/specialityTypes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/add_clinic_caption_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/clinic_phone" />
+
+    <LinearLayout
+        android:id="@+id/phone_number_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/phone_add_clinic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:ems="10"
+            android:hint="@string/clinic_phone"
+            android:inputType="phone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/add_phone_plus_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/plus_icon" />
+
+        <ImageButton
+            android:id="@+id/remove_phone_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/minus_icon" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/caption_add_clinic_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/address" />
+
+    <EditText
+        android:id="@+id/addreess_add_clinic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="58dp"
+        android:ems="10"
+        android:hint="@string/address"
+        android:inputType="textPostalAddress" />
+
+    <Button
+        android:id="@+id/add_point_on_map"
+        android:layout_width="217dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_gravity="right"
+        android:text="@string/select_location" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/insurances" />
+
+    <LinearLayout
+        android:id="@+id/insurances_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/add_clinic_insurance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/add_insurance_add_clinic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/plus_icon" />
+
+        <ImageButton
+            android:id="@+id/remove_insurance_add_clinic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/minus_icon" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>

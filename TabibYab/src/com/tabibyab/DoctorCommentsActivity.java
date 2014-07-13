@@ -26,7 +26,7 @@ import android.widget.Toast;
 public class DoctorCommentsActivity extends Activity implements
 		OnItemClickListener {
 
-	ArrayList<String> commentsList;
+	ArrayList<Comment> commentsList;
 	private int doctor_id;
 	private ProgressDialog pDialog;
 
@@ -83,8 +83,13 @@ public class DoctorCommentsActivity extends Activity implements
 	public void showComments() {
 		ListView listComments;
 		listComments = (ListView) findViewById(R.id.comments_list);
-		listComments.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, commentsList));
+		
+		String[] names = new String[commentsList.size()];
+		for (int i = 0; i < names.length; i++) {
+			names[i] = commentsList.get(i).getName();
+		}
+		
+		listComments.setAdapter(new CommentArrayAdapter(this, commentsList, names));
 		listComments.setOnItemClickListener(this);
 		
 		Button add_comment_button = (Button) findViewById(R.id.add_comment);

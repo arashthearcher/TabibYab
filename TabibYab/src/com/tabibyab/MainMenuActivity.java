@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 
 public class MainMenuActivity extends Activity {
 	
-	ImageButton viewMapButton, viewListButton, viewFavoriteButton;
+	ImageButton viewMapButton, viewListButton, viewFavoriteButton, addClinicButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,18 @@ public class MainMenuActivity extends Activity {
 				startActivity(showFavorite);
 			}
 		});
+		
+		
+		addClinicButton = (ImageButton) findViewById(R.id.add_clinic_main_menu);
+		addClinicButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent addClinic = new Intent(MainMenuActivity.this, AddClinicActivity.class);
+				startActivity(addClinic);
+			}
+		});
+		
 		
 		
 		

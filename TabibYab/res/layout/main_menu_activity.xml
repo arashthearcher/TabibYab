@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/main_menu_border"
     android:gravity="center_horizontal" >
 
     <TextView
@@ -21,44 +22,65 @@
         android:layout_below="@+id/show_list_main_menu"
         android:text="@string/show_as_list" />
 
-    <ImageButton
-        android:id="@+id/show_map_icon_main_menu"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/map_icon" />
-
-    <ImageButton
-        android:id="@+id/show_list_main_menu"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_alignLeft="@+id/show_map_caption_main_menu"
-        android:layout_below="@+id/show_map_caption_main_menu"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/list_icon" />
-
-    <ImageButton
-        android:id="@+id/favorite_button_main_menu"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_alignLeft="@+id/show_list_caption_main_menu"
-        android:layout_below="@+id/show_list_caption_main_menu"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/favorites_icon_gray" />
-
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/caption_clinic_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/favorite_button_main_menu"
         android:layout_below="@+id/favorite_button_main_menu"
         android:layout_alignRight="@+id/favorite_button_main_menu"
         android:text="@string/favorites" />
+
+    <ImageButton
+        android:id="@+id/show_list_main_menu"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignTop="@+id/show_map_icon_main_menu"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/show_map_icon_main_menu"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/list_icon" />
+
+    <ImageButton
+        android:id="@+id/favorite_button_main_menu"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignLeft="@+id/show_list_caption_main_menu"
+        android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/favorites_icon_gray" />
+
+    <ImageButton
+        android:id="@+id/show_map_icon_main_menu"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="89dp"
+        android:layout_marginTop="55dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/map_icon" />
+
+    <ImageButton
+        android:id="@+id/add_clinic_main_menu"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_above="@+id/caption_clinic_type"
+        android:layout_toLeftOf="@+id/show_list_main_menu"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/plus_icon" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/add_clinic_main_menu"
+        android:layout_alignRight="@+id/add_clinic_main_menu"
+        android:layout_below="@+id/add_clinic_main_menu"
+        android:text="@string/add_clinic_activity" />
 
 </RelativeLayout>

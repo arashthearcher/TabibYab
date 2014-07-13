@@ -16,10 +16,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,9 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.QuickContactBadge;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,17 +48,25 @@ public class AddClinicActivity extends Activity {
 	private Spinner spinnerSpecialtyType = null;
 	private Spinner spinnerSpecialityLevelType = null;
 	private TextView nameTextView = null;
-	private TextView phoneTextView = null;
 	private TextView addressTextView = null;
+	private ArrayList<EditText> phoneTextViews = new ArrayList<EditText>();
 	private String selectedImagePath;
 	private QuickContactBadge profileImg;
+	private ImageButton addPhoneButton, removePhoneButton;
+	
+	private LinearLayout phoneNumbersLayout;
+	private ArrayList<EditText> insurancesTextViews = new ArrayList<EditText>();
+	private LinearLayout insurancesLayout;
+	private ImageButton addInsuranceButton, removeInsuranceButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_clinic);
+		
+		
 		nameTextView = (TextView) findViewById(R.id.name_add_clinic);
-		phoneTextView = (TextView) findViewById(R.id.phone_add_clinic);
+		phoneTextViews.add((EditText) findViewById(R.id.phone_add_clinic));
 		addressTextView = (TextView) findViewById(R.id.addreess_add_clinic);
 		spinnerClinicType = (Spinner) findViewById(R.id.clinicType);
 		spinnerSpecialtyType = (Spinner) findViewById(R.id.specialityTypes);
@@ -67,6 +80,41 @@ public class AddClinicActivity extends Activity {
 		ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(
 				this, R.array.speciality_level_types, R.layout.dropdown_item);
 		spinnerSpecialityLevelType.setAdapter(adapter3);
+		
+		
+		spinnerSpecialityLevelType.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int pos, long id) {
+				// TODO Auto-generated method stub
+				
+				if (pos == 0)
+				{
+					spinnerSpecialtyType.setSelection(0);
+					spinnerSpecialtyType.setEnabled(false);
+					
+				}
+				else
+				{
+					spinnerSpecialtyType.setEnabled(true);
+				}
+				
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		
+		
+		
+		
 		Button add_profile = (Button) findViewById(R.id.add_profile_picture);
 		profileImg = (QuickContactBadge) findViewById(R.id.image_Contact);
 		add_profile.setOnClickListener(new OnClickListener() {
@@ -89,6 +137,85 @@ public class AddClinicActivity extends Activity {
 				startActivityForResult(selectLocationIntent, LOCATION_REQUEST);
 			}
 		});
+		
+		
+		phoneNumbersLayout = (LinearLayout) findViewById(R.id.phone_number_linear_layout);
+		addPhoneButton = (ImageButton) findViewById(R.id.add_phone_plus_icon);
+		addPhoneButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				EditText tv = new EditText(getApplicationContext());
+				tv.setLayoutParams(phoneTextViews.get(0).getLayoutParams());
+				tv.setInputType(InputType.TYPE_CLASS_PHONE);
+				tv.setEms(10);
+				tv.setBackgroundDrawable(phoneTextViews.get(0).getBackground());
+				tv.setHighlightColor(Color.BLACK);
+				tv.setTextColor(Color.BLACK);
+				phoneTextViews.add(tv);
+				phoneNumbersLayout.addView(tv);
+			}
+		});
+		
+		removePhoneButton = (ImageButton) findViewById(R.id.remove_phone_button);
+		removePhoneButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				if(phoneTextViews.size() > 1)
+				{
+					phoneNumbersLayout.removeView(phoneTextViews.get(phoneTextViews.size()-1));
+					phoneTextViews.remove(phoneTextViews.size()-1);
+				}
+				
+			}
+		}); 
+		
+		
+		
+		
+		
+		
+		insurancesTextViews.add((EditText) findViewById(R.id.add_clinic_insurance));
+		insurancesLayout = (LinearLayout) findViewById(R.id.insurances_layout);
+		addInsuranceButton = (ImageButton) findViewById(R.id.add_insurance_add_clinic);
+		addInsuranceButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				EditText tv = new EditText(getApplicationContext());
+				tv.setLayoutParams(insurancesTextViews.get(0).getLayoutParams());
+				tv.setEms(10);
+				tv.setBackgroundDrawable(insurancesTextViews.get(0).getBackground());
+				tv.setHighlightColor(Color.BLACK);
+				tv.setTextColor(Color.BLACK);
+				insurancesTextViews.add(tv);
+				insurancesLayout.addView(tv);
+			}
+		});
+		
+		removeInsuranceButton = (ImageButton) findViewById(R.id.remove_insurance_add_clinic);
+		removeInsuranceButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				if(insurancesTextViews.size() > 1)
+				{
+					insurancesLayout.removeView(insurancesTextViews.get(insurancesTextViews.size()-1));
+					insurancesTextViews.remove(insurancesTextViews.size()-1);
+				}
+				
+			}
+		}); 
+		
+		
+		
+		
+		
 	}
 
 	@Override
@@ -160,13 +287,11 @@ public class AddClinicActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
-			// Creating service handler class instance
+			// Sending Clinic Attributes
 			ServiceHandler sh = new ServiceHandler();
 			ArrayList<DetailNameValuePair> params = new ArrayList<DetailNameValuePair>();
 			params.add(new DetailNameValuePair(TAGS.TAG_NAME, nameTextView
 					.getText().toString()));
-			// params.add(new DetailNameValuePair(TAGS.TAG_PHONE_NUMBERS,
-			// phoneTextView.getText().toString()));
 			params.add(new DetailNameValuePair(TAGS.TAG_ADDRESS,
 					addressTextView.getText().toString()));
 			params.add(new DetailNameValuePair(TAGS.TAG_COORDINATES,
@@ -179,15 +304,42 @@ public class AddClinicActivity extends Activity {
 					spinnerSpecialityLevelType.getSelectedItem().toString()));
 			String response = sh.makeServiceCall(URLs.url_list_doctor,
 					ServiceHandler.POST, (List) params);
+			
+			
 			Clinic doctor_new = sh.parseDoctorInfo(response);
+			
+			
+			// Sending Tel Numbers
 			ArrayList<DetailNameValuePair> phone_params = new ArrayList<DetailNameValuePair>();
-			phone_params.add(new DetailNameValuePair(TAGS.TAG_TEL,
-					phoneTextView.getText().toString()));
-			phone_params.add(new DetailNameValuePair(TAGS.TAG_CLINIC, Integer
-					.toString(doctor_new.id)));
-			phone_params.add(new DetailNameValuePair(TAGS.TAG_TITLE, "phone"));
-			sh.makeServiceCall(URLs.url_doctor_phonenumber,
-					ServiceHandler.POST, (List) phone_params);
+			
+			for (EditText phoneTextView : phoneTextViews) {
+				phone_params.add(new DetailNameValuePair(TAGS.TAG_TEL,
+						phoneTextView.getText().toString()));
+				phone_params.add(new DetailNameValuePair(TAGS.TAG_CLINIC, Integer
+						.toString(doctor_new.id)));
+				phone_params.add(new DetailNameValuePair(TAGS.TAG_TITLE, "phone"));
+				sh.makeServiceCall(URLs.url_doctor_phonenumber,
+						ServiceHandler.POST, (List) phone_params);
+				phone_params.clear();
+			}
+			
+			
+			// Sending Insurances
+			ArrayList<DetailNameValuePair> insurance_params = new ArrayList<DetailNameValuePair>();
+			
+			for (EditText insuranceTextView : insurancesTextViews) {
+				insurance_params.add(new DetailNameValuePair(TAGS.TAG_TITLE,
+						insuranceTextView.getText().toString()));
+				insurance_params.add(new DetailNameValuePair(TAGS.TAG_CLINIC, Integer
+						.toString(doctor_new.id)));
+				sh.makeServiceCall(URLs.url_list_insurances,
+						ServiceHandler.POST, (List) insurance_params);
+				insurance_params.clear();
+			}
+			
+			
+			
+			
 
 			return null;
 		}

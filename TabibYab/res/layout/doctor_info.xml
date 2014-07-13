@@ -81,10 +81,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="138dp"
+        android:layout_height="300dp"
         android:layout_alignLeft="@+id/frameLayout1"
         android:layout_alignRight="@+id/frameLayout1"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/frameLayout1"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bg"
         android:paddingLeft="16dp"
         android:paddingRight="16dp" >
@@ -111,16 +112,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/call"
+            android:layout_below="@+id/phone"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_action_forward" />
 
         <TextView
             android:id="@+id/phone"
-            android:layout_width="96dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/call"
-            android:layout_alignTop="@+id/waiting_time"
+            android:layout_alignTop="@+id/call"
             android:layout_toLeftOf="@+id/call"
+            android:minHeight="50dp"
             android:text="@string/clinic_phone" />
 
         <ImageView
@@ -132,31 +134,6 @@
             android:layout_toLeftOf="@+id/phone"
             android:src="@drawable/waiting_room" />
 
-        <ImageView
-            android:id="@+id/clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/forward"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_action_time" />
-
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/waiting"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/forward"
-            android:text="@string/address" />
-
-        <TextView
-            android:id="@+id/operating_hour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/address"
-            android:layout_alignRight="@+id/phone"
-            android:layout_alignTop="@+id/clock" />
-
         <TextView
             android:id="@+id/days"
             android:layout_width="wrap_content"
@@ -165,6 +142,49 @@
             android:layout_alignBottom="@+id/operating_hour"
             android:layout_alignRight="@+id/waiting_time"
             android:text="days" />
+
+        <ImageView
+            android:id="@+id/clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/forward"
+            android:layout_below="@+id/forward"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_action_time" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/clock"
+            android:layout_toLeftOf="@+id/forward"
+            android:text="@string/address" />
+
+        <TextView
+            android:id="@+id/operating_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/clock"
+            android:layout_toLeftOf="@+id/clock"
+            android:text="@string/operating_hours" />
+
+        <ImageView
+            android:id="@+id/insurance_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@+id/clock"
+            android:layout_below="@+id/clock"
+            android:layout_marginTop="22dp"
+            android:src="@drawable/insurance" />
+
+        <TextView
+            android:id="@+id/insurances_doctor_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/insurance_icon"
+            android:layout_toLeftOf="@+id/insurance_icon"
+            android:text="@string/insurances" />
+
     </RelativeLayout>
 
 </RelativeLayout>
