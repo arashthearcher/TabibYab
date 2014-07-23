@@ -46,7 +46,6 @@ public class DoctorCommentsActivity extends Activity implements
 	}
 
 	private class GetComments extends AsyncTask<Void, Void, Void> {
-
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -90,7 +89,6 @@ public class DoctorCommentsActivity extends Activity implements
 		}
 		
 		listComments.setAdapter(new CommentArrayAdapter(this, commentsList, names));
-		listComments.setOnItemClickListener(this);
 		
 		Button add_comment_button = (Button) findViewById(R.id.add_comment);
 		add_comment_button.setOnClickListener(new OnClickListener() {

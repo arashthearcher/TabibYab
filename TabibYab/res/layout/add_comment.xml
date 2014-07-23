@@ -2,60 +2,180 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/activity_border"
     android:minHeight="20dp"
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
 
-<RatingBar
-    android:id="@+id/ratingTotal"
-    style="@style/appleRatingBar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignBottom="@+id/add_main_comment"
-    android:layout_alignLeft="@+id/comment_text"
-    android:layout_marginBottom="65dp"
-    android:minHeight="32dp" />
+    <RatingBar
+        android:id="@+id/ratingTotal"
+        style="@style/appleRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/add_main_comment"
+        android:layout_alignLeft="@+id/comment_text"
+        android:layout_marginBottom="65dp"
+        android:minHeight="32dp" />
 
-<Button
-    android:id="@+id/add_main_comment"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/ratingTotal"
-    android:layout_alignParentBottom="true"
-    android:layout_marginBottom="66dp"
-    android:text="@string/add_comment" />
+    <Button
+        android:id="@+id/add_main_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ratingTotal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="66dp"
+        android:text="@string/add_comment" />
 
-<TextView
-    android:id="@+id/docSpeciality"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignRight="@+id/add_main_comment"
-    android:layout_alignTop="@+id/ratingTotal"
-    android:text="@string/Score"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
+    <TextView
+        android:id="@+id/docSpeciality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/add_main_comment"
+        android:layout_alignTop="@+id/ratingTotal"
+        android:text="@string/Score"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-<EditText
-    android:id="@+id/comment_text"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/commenter_name"
-    android:layout_below="@+id/commenter_name"
-    android:layout_weight="0.16"
-    android:ems="10"
-    android:hint="@string/comment_text"
-    android:inputType="textMultiLine"
-    android:minHeight="220dp" />
+    <EditText
+        android:id="@+id/comment_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/commenter_name"
+        android:layout_below="@+id/commenter_name"
+        android:layout_weight="0.16"
+        android:ems="10"
+        android:hint="@string/comment_text"
+        android:inputType="textMultiLine"
+        android:minHeight="220dp" />
 
-<EditText
-    android:id="@+id/commenter_name"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_marginTop="40dp"
-    android:ems="10"
-    android:hint="@string/commenter_name"
-    android:inputType="textPersonName" />
+    <EditText
+        android:id="@+id/commenter_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/commenter_name"
+        android:inputType="textPersonName" />
+
+    <ToggleButton
+        android:id="@+id/toggle_show_more_less_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="ToggleButton"
+        android:textOff="@string/more"
+        android:textOn="@string/less" />
+
+    <RelativeLayout
+        android:id="@+id/show_more_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/comment_text"
+        android:layout_alignRight="@+id/comment_text"
+        android:layout_below="@+id/toggle_show_more_less_comments"
+        android:visibility="gone"
+        android:layout_marginTop="41dp" >
+
+        <TextView
+            android:id="@+id/text_view_123"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/waiting_time_seekbar_add_comment"
+            android:layout_below="@+id/waiting_time_seekbar_add_comment"
+            android:text="@string/minute" />
+
+        <TextView
+            android:id="@+id/minutes_number_add_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text_view_123"
+            android:layout_alignBottom="@+id/text_view_123"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/TextView04"
+            android:text="0" />
+
+        <SeekBar
+            android:id="@+id/day_until_appointment_add_comment"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/caption_day_until_appointment" />
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/day_until_appointment_add_comment"
+            android:text="@string/day" />
+
+        <TextView
+            android:id="@+id/caption_day_until_appointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/waiting_time_caption"
+            android:layout_below="@+id/minutes_number_add_comment"
+            android:layout_marginTop="49dp"
+            android:text="@string/day_until_appointment" />
+
+        <TextView
+            android:id="@+id/number_of_days_until_appointment_textview_add_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/TextView02"
+            android:layout_alignBottom="@+id/TextView02"
+            android:layout_alignLeft="@+id/minutes_number_add_comment"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/visiting_fee_seekbar_add_comment"
+            android:text="@string/toman" />
+
+        <TextView
+            android:id="@+id/fee_text_view_add_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/number_of_days_until_appointment_textview_add_comment"
+            android:layout_below="@+id/visiting_fee_seekbar_add_comment"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/caption_visiting_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fee_text_view_add_comment"
+            android:layout_alignRight="@+id/caption_day_until_appointment"
+            android:text="@string/visiting_fee" />
+
+        <SeekBar
+            android:id="@+id/visiting_fee_seekbar_add_comment"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/TextView04"
+            android:layout_below="@+id/TextView02"
+            android:layout_marginTop="63dp" />
+
+        <TextView
+            android:id="@+id/waiting_time_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/waiting_time_seekbar_add_comment"
+            android:layout_alignParentRight="true"
+            android:text="@string/waiting_time" />
+
+        <SeekBar
+            android:id="@+id/waiting_time_seekbar_add_comment"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

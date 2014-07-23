@@ -36,9 +36,10 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignTop="@+id/show_map_icon_main_menu"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="75dp"
         android:layout_toRightOf="@+id/show_map_icon_main_menu"
         android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/list_icon" />
 
@@ -49,6 +50,7 @@
         android:layout_alignLeft="@+id/show_list_caption_main_menu"
         android:layout_centerVertical="true"
         android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/favorites_icon_gray" />
 
@@ -58,9 +60,10 @@
         android:layout_height="75dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="89dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="200dp"
         android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/map_icon" />
 
@@ -71,11 +74,12 @@
         android:layout_above="@+id/caption_clinic_type"
         android:layout_toLeftOf="@+id/show_list_main_menu"
         android:adjustViewBounds="true"
+        android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/plus_icon" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/text_view12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/add_clinic_main_menu"

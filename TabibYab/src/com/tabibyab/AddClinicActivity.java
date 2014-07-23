@@ -75,7 +75,7 @@ public class AddClinicActivity extends Activity {
 				this, R.array.clinic_types, R.layout.dropdown_item);
 		spinnerClinicType.setAdapter(adapter1);
 		ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
-				this, R.array.speciality_types, R.layout.dropdown_item);
+				this, R.array.speciality_types_add_clinic, R.layout.dropdown_item);
 		spinnerSpecialtyType.setAdapter(adapter2);
 		ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(
 				this, R.array.speciality_level_types, R.layout.dropdown_item);

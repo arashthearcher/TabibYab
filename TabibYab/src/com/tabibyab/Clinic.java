@@ -31,6 +31,9 @@ public class Clinic {
 	String description;
 	Bitmap profilePic ;
 	String profilePicAddress;
+	String waitingTime;
+	String queueTime;
+	String visitingFee;
 	ArrayList<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 	ArrayList<OperatingHour> operatingHours = new ArrayList<OperatingHour>();
 	ArrayList<String> pictureURLs;
@@ -56,7 +59,9 @@ public class Clinic {
 		    {
 		    	this.description = jo.getString(TAGS.TAG_DESCRIPTION);
 		    	this.websiteAddress = jo.getString(TAGS.TAG_WEBSITE_ADDRESS);
-		    	
+		    	this.waitingTime = jo.getString(TAGS.TAG_WAITING_TIME);
+		    	this.queueTime = jo.getString(TAGS.TAG_QUEUE_TIME);
+		    	this.visitingFee = jo.getString(TAGS.TAG_VISITING_FEE);
 		    	
 		    	JSONArray phoneNumbersJSON = jo.getJSONArray(TAGS.TAG_PHONE_NUMBERS);
 		    	parsePhoneNumbers(phoneNumbersJSON);
@@ -211,6 +216,36 @@ public class Clinic {
 	
 	
 	
+	public String getWaitingTime() {
+		return waitingTime;
+	}
+
+
+	public void setWaitingTime(String waitingTime) {
+		this.waitingTime = waitingTime;
+	}
+
+
+	public String getQueueTime() {
+		return queueTime;
+	}
+
+
+	public void setQueueTime(String queueTime) {
+		this.queueTime = queueTime;
+	}
+
+
+	public String getVisitingFee() {
+		return visitingFee;
+	}
+
+
+	public void setVisitingFee(String visitingFee) {
+		this.visitingFee = visitingFee;
+	}
+
+
 	public void setMarker(Marker marker)
 	{
 		this.marker = marker;

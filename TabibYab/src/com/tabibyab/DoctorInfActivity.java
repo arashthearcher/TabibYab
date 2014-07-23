@@ -8,8 +8,10 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
@@ -19,6 +21,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +50,6 @@ public class DoctorInfActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		new GetDoctor().execute();
 		Intent DoctorInfintent = getIntent();
 		doctor_id = DoctorInfintent.getIntExtra("doctor_id", 1);
 		setContentView(R.layout.doctor_info);
@@ -125,8 +128,68 @@ public class DoctorInfActivity extends Activity {
 				}
 			}
 		});
+
+	
+	
+		ImageButton directionButton = (ImageButton) findViewById(R.id.forward);
+		directionButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				Location myLocation = ((MyApplication) getApplicationContext()).getCurrentLocation();
+				Intent directionIntent = new Intent(DoctorInfActivity.this, DirectionActivity.class);
+				directionIntent.putExtra(TAGS.TAG_START_LATITUDE, myLocation.getLatitude());
+				directionIntent.putExtra(TAGS.TAG_START_LONGITUDE, myLocation.getLongitude());
+				directionIntent.putExtra(TAGS.TAG_END_LATITUDE, doctor.getCoordinates().getLat());
+				directionIntent.putExtra(TAGS.TAG_END_LONGITUDE, doctor.getCoordinates().getLng());
+				
+				startActivity(directionIntent);
+			}
+		});
+		
+		
+		
+		ImageButton callButton = (ImageButton) findViewById(R.id.call);
+		callButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+			
+				
+				
+				if(doctor.getPhoneNumbers().size() == 1)
+				{
+					
+					String phoneNumber = doctor.getPhoneNumbers().get(0).tel;
+					
+					String uri = "tel:" + phoneNumber.trim() ;
+					Intent intent = new Intent(Intent.ACTION_CALL);
+					intent.setData(Uri.parse(uri));
+					startActivity(intent);
+				}
+				else
+				{
+					PhonePickerDialog phonePicker = new PhonePickerDialog();
+					phonePicker.initialize(doctor.getPhoneNumbers());
+					phonePicker.show(getFragmentManager(), "Phone Picker");
+				}
+				
+			
+			}
+		});
+		
+		
 	}
 
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		new GetDoctor().execute();
+	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -206,8 +269,10 @@ public class DoctorInfActivity extends Activity {
 		TextView doc_speciality =(TextView) findViewById(R.id.docSpeciality);
 		QuickContactBadge contact = (QuickContactBadge) findViewById(R.id.imgContact);
 		TextView phone =(TextView) findViewById(R.id.phone);
-		TextView days =(TextView) findViewById(R.id.days);
-		TextView waiting_times =(TextView) findViewById(R.id.waiting_time);
+		TextView queueTimeDays =(TextView) findViewById(R.id.queue_time_days_doctor_info);
+		TextView waiting_times =(TextView) findViewById(R.id.waiting_time_doctor_info);
+		TextView visitingFee =(TextView) findViewById(R.id.visiting_fee_text_view_doctor_info);
+		
 		TextView address =(TextView) findViewById(R.id.address);
 		TextView operating_hours =(TextView) findViewById(R.id.operating_hour);
 		doc_name.setText(doctor.name);
@@ -223,9 +288,12 @@ public class DoctorInfActivity extends Activity {
 		phone.setText(phones);
 		
 		
-		days.setText(doctor.appointmentOnly);
+		queueTimeDays.setText(doctor.getQueueTime());
 		
-		waiting_times.setText(doctor.appointmentOnly);
+		waiting_times.setText(doctor.getWaitingTime());
+		
+		
+		visitingFee.setText(doctor.getVisitingFee());
 		
 		address.setText(doctor.address);
 		

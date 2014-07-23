@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    <string name="more">نمایش بیشتر</string>
+    <string name="less">پنهان‌سازی</string>
+    <string name="minute">دقیقه</string>
+    <string name="day">روز</string>
+    <string name="toman">تومان</string>
+    <string name="waiting_time">زمان انتظار در مطب</string>
+    <string name="day_until_appointment">تعداد روز تا وقت ویزیت</string>
+    <string name="visiting_fee">هزینه‌ی ویزیت</string>
+    <string name="direction">مسیریابی</string>
     <string name="home">خانه</string>
      <string name="favorites">علاقه‌مندی‌ها</string>
     <string name="current_location">محل فعلی من</string>
@@ -58,8 +67,27 @@
         <item>سایر</item>
     </string-array>
     
-    <string-array name="speciality_types">
+    <string-array name="speciality_types_add_clinic">
         <item>     </item>
+        <item>اعصاب و روان</item>
+        <item>رادیولوژی</item>
+        <item>زنان و زایمان</item>
+        <item> گوش حلق و بيني</item>
+        <item>جراحی عمومی</item>
+        <item>کودکان</item>
+        <item>گوارش</item>
+        <item>ریه</item>
+        <item> قلب و عروق</item>
+        <item> داخلی</item>
+        <item> چشم</item>
+        <item> پوست</item>
+        <item>ارتوپدي</item>
+        <item>دندانپزشکی</item>
+        <item>سایر</item>
+    </string-array>
+    
+    
+    <string-array name="speciality_types">
         <item>اعصاب و روان</item>
         <item>رادیولوژی</item>
         <item>زنان و زایمان</item>

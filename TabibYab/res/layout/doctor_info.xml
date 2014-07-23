@@ -90,30 +90,25 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp" >
 
-        <ImageView
+        <ImageButton
             android:id="@+id/call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_action_call" />
 
-        <TextView
-            android:id="@+id/waiting_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/waiting"
-            android:layout_marginRight="28dp"
-            android:layout_toLeftOf="@+id/waiting"
-            android:text="times" />
-
-        <ImageView
+        <ImageButton
             android:id="@+id/forward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/call"
             android:layout_below="@+id/phone"
             android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_action_forward" />
 
         <TextView
@@ -124,24 +119,6 @@
             android:layout_toLeftOf="@+id/call"
             android:minHeight="50dp"
             android:text="@string/clinic_phone" />
-
-        <ImageView
-            android:id="@+id/waiting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/phone"
-            android:src="@drawable/waiting_room" />
-
-        <TextView
-            android:id="@+id/days"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/operating_hour"
-            android:layout_alignBottom="@+id/operating_hour"
-            android:layout_alignRight="@+id/waiting_time"
-            android:text="days" />
 
         <ImageView
             android:id="@+id/clock"
@@ -184,6 +161,88 @@
             android:layout_alignTop="@+id/insurance_icon"
             android:layout_toLeftOf="@+id/insurance_icon"
             android:text="@string/insurances" />
+
+        <ImageView
+            android:id="@+id/waiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="128dp"
+            android:src="@drawable/waiting_room" />
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/waiting_time_doctor_info"
+            android:layout_alignBottom="@+id/waiting_time_doctor_info"
+            android:layout_alignParentLeft="true"
+            android:text="@string/minute" />
+
+        <ImageView
+            android:id="@+id/queue_time_doctor_info"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="100dp"
+            android:layout_alignTop="@+id/waiting"
+            android:layout_alignLeft="@+id/waiting"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/queue_time" />
+
+        <TextView
+            android:id="@+id/queue_time_days_doctor_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/queue_time_doctor_info"
+            android:layout_alignLeft="@+id/waiting_time_doctor_info"
+            android:text="days" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/queue_time_days_doctor_info"
+            android:layout_alignBottom="@+id/queue_time_days_doctor_info"
+            android:layout_alignParentLeft="true"
+            android:text="@string/day" />
+
+        <ImageView
+            android:id="@+id/fee_image_doctor_info"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignLeft="@+id/queue_time_doctor_info"
+            android:layout_alignTop="@+id/queue_time_doctor_info"
+            android:layout_marginTop="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fee" />
+
+        <TextView
+            android:id="@+id/visiting_fee_text_view_doctor_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/fee_image_doctor_info"
+            android:layout_alignLeft="@+id/queue_time_days_doctor_info"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/visiting_fee_text_view_doctor_info"
+            android:layout_alignBottom="@+id/visiting_fee_text_view_doctor_info"
+            android:text="@string/toman" />
+
+        <TextView
+            android:id="@+id/waiting_time_doctor_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/waiting"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/TextView02"
+            android:text="times" />
 
     </RelativeLayout>
 

@@ -75,6 +75,12 @@
         </activity>
         
         <activity
+            android:name="com.tabibyab.DirectionActivity"
+            android:label="@string/direction" >
+            
+        </activity>
+        
+        <activity
             android:name="com.tabibyab.SpecialityActivity"
             android:label="@string/speciality" >
             

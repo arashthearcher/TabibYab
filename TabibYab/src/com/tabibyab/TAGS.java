@@ -39,4 +39,13 @@ public class TAGS {
     
     public static final String TAG_FAVORITE = "favorite";
     
+    public static final String TAG_START_LATITUDE = "start_lat";
+    public static final String TAG_START_LONGITUDE = "start_lng";
+    
+    public static final String TAG_END_LATITUDE = "end_lat";
+    public static final String TAG_END_LONGITUDE = "end_lng";
+    
+    public static final String TAG_VISITING_FEE = "visiting_fee";
+    public static final String TAG_PRICE = "price";
+    
 }
