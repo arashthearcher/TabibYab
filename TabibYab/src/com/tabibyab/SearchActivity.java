@@ -1,11 +1,13 @@
 package com.tabibyab;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
@@ -22,10 +24,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
-
 import android.graphics.Bitmap;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends Activity implements SortingOptionDialog.NoticeDialogListener {
 
 	ArrayList<NameValuePair> queryList = new ArrayList<NameValuePair>();
 	ListView searchListView ;
@@ -33,6 +34,9 @@ public class SearchActivity extends Activity {
 	ArrayList<Clinic> clinicList;
 	private boolean useExistingClinicList = false;
 	private Location mCurrentLocation;
+	private String orderby = "r";
+	private SortingOptionDialog sortingOptionDialog;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -105,10 +109,17 @@ public class SearchActivity extends Activity {
 			Intent homeIntent = new Intent(SearchActivity.this, MainMenuActivity.class);
 			startActivity(homeIntent);
 			return true;
+		case R.id.action_sort:
+			sortingOptionDialog = new SortingOptionDialog();
+			sortingOptionDialog.setCurrentOrderBy(orderby);
+			sortingOptionDialog.show(getFragmentManager(), "sorting_option");
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	
 	
 	
 	
@@ -120,17 +131,51 @@ public class SearchActivity extends Activity {
 	    handleIntent(intent);
 	}
 
+	
+	
+	private void changeOrderingOption()
+	{
+		boolean hasOrdering = false;
+		for (int i = 0; i < queryList.size(); i++) {
+			if(queryList.get(i).getName().equals(TAGS.TAG_ORDER_BY))
+			{
+				hasOrdering = true;
+				((DetailNameValuePair)queryList.get(i)).setValue(orderby);
+			}
+		}
+		
+		if(hasOrdering == false)
+		{
+			queryList.add(new DetailNameValuePair(TAGS.TAG_ORDER_BY, orderby));
+			addLocationtoQueryList(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+			
+			
+		}
+	}
+	
+	private void addLocationtoQueryList(double lat, double lng) {
+		queryList.add(new DetailNameValuePair(TAGS.TAG_LATITUDE,Double.toString(lat)));
+	    queryList.add(new DetailNameValuePair(TAGS.TAG_LONGITUDE,Double.toString(lng)));
+	    queryList.add(new DetailNameValuePair(TAGS.TAG_DISTANCE,Double.toString(20)));
+	}
+	
+	
 	private void handleIntent(Intent intent) {
 	    
 		if(useExistingClinicList)
 		{
+			if(intent.hasExtra(TAGS.TAG_ORDER_BY))
+				orderby = intent.getStringExtra(TAGS.TAG_ORDER_BY);
 			clinicList = ((MyApplication) getApplicationContext()).getClinicList();
+			queryList = ((MyApplication) getApplicationContext()).getQueryList();
 			setMyListAdapter();
 		}
 		else
 		{
 			if(intent.hasExtra(TAGS.TAG_SPECIALITY))
 				queryList.add(new DetailNameValuePair(TAGS.TAG_SPECIALITY, intent.getStringExtra("speciality")));
+			
+			
 			
 			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 		    	if(intent.hasExtra(SearchManager.QUERY))
@@ -142,6 +187,7 @@ public class SearchActivity extends Activity {
 						}
 		    		}
 		    }
+			changeOrderingOption();
 			new GetClinics().execute();
 		}
 	}
@@ -156,10 +202,14 @@ public class SearchActivity extends Activity {
 		
 	}
 	
+	
+	
+	
 	private void refreshList()
 	{
 		useExistingClinicList = false;
 		queryList.clear();
+		changeOrderingOption();
 		new GetClinics().execute();
 		
 	}
@@ -213,6 +263,25 @@ public class SearchActivity extends Activity {
 
 		}
 
+	}
+
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		// TODO Auto-generated method stub
+		
+		String newOrderby = sortingOptionDialog.getSelectedSortingOption();
+		if(!orderby.equals(newOrderby))
+		{
+			orderby=newOrderby;
+			changeOrderingOption();
+			new GetClinics().execute();
+		}
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

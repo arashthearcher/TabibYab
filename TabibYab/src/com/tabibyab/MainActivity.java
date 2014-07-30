@@ -148,7 +148,9 @@ public class MainActivity extends Activity implements
 			Intent clinicListIntent = new Intent(MainActivity.this,
 					SearchActivity.class);
 			clinicListIntent.putExtra("useExistingClinicList", true);
+			clinicListIntent.putExtra(TAGS.TAG_ORDER_BY, "d");
 			((MyApplication) getApplicationContext()).setClinicList(clinicList);
+			((MyApplication) getApplicationContext()).setQueryList(queryList);
 			startActivity(clinicListIntent);
 			return true;
 		case R.id.searchFilterButton:
@@ -393,7 +395,8 @@ public class MainActivity extends Activity implements
 	
 	private void addLocationtoQueryList(double lat, double lng) {
 		queryList.add(new DetailNameValuePair(TAGS.TAG_LATITUDE,Double.toString(lat)));
-		  queryList.add(new DetailNameValuePair(TAGS.TAG_LONGITUDE,Double.toString(lng)));
+		queryList.add(new DetailNameValuePair(TAGS.TAG_LONGITUDE,Double.toString(lng)));
+		queryList.add(new DetailNameValuePair(TAGS.TAG_ORDER_BY, "d"));
 	}
 	
 	private class GetClinics extends AsyncTask<Void, Void, Integer> {

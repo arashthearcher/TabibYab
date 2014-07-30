@@ -14,6 +14,20 @@ public class DetailNameValuePair implements NameValuePair {
 		return name;
 	}
 
+	
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+
+
 	@Override
 	public String getValue() {
 		// TODO Auto-generated method stub
@@ -30,6 +44,12 @@ public class DetailNameValuePair implements NameValuePair {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return name +" : "+ value;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		// TODO Auto-generated method stub
+		return ((DetailNameValuePair)o).getName().equals(this.name);
 	}
 
 }

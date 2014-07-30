@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    <string name="sort_by_rating">مرتب سازی بر اساس امتیاز</string>
+    <string name="sort_by_distance">مرتب سازی براساس فاصله</string>
+    <string name="sort">مرتب سازی</string>
+    <string name="action_sorting">مرتب کن</string>
+    
     <string name="more">نمایش بیشتر</string>
     <string name="less">پنهان‌سازی</string>
     <string name="minute">دقیقه</string>

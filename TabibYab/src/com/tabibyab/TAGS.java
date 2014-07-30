@@ -48,4 +48,5 @@ public class TAGS {
     public static final String TAG_VISITING_FEE = "visiting_fee";
     public static final String TAG_PRICE = "price";
     
+    public static final String TAG_ORDER_BY = "orderby";
 }
